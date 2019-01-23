@@ -3,13 +3,14 @@ package main
 import (
 	"fmt"
 
-	"./server"
+	"github.com/michalnov/SovyGo/bin/server"
 )
 
 func main() {
 	fmt.Println("Hello Server")
 
 	running := make(chan int)
+
 	go func() {
 		server := server.Server{}
 		server.SetupServer(running)
