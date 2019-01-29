@@ -17,6 +17,7 @@ function sendAESKey(data) {
     let toSend = new Envelop;
     //toSend.body = state.scrypt.symmetricKey;
     toSend.RSAToEnvelop(state.scrypt.symmetricKey)
+    let req = toSend.buildEnvelop();
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -27,14 +28,15 @@ function sendAESKey(data) {
         }
     };
     xhttp.open("POST", "http://itsovy.sk:1122/key/aes/", true);
-    console.log(toSend.buildEnvelop());
-    xhttp.send(toSend.buildEnvelop());
+    console.log(req);
+    xhttp.send(req);
 }
 
 function pingSovy() {
     let xhttp = new XMLHttpRequest();
     let data = new Envelop;
     data.encryptToEnvelop("ping")
+    let req = data.buildEnvelop();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
         
@@ -45,8 +47,8 @@ function pingSovy() {
         }
     };
     xhttp.open("POST", "http://itsovy.sk:1122/key/ping/", true);
-    console.log(data.buildEnvelop());
-    xhttp.send(data.buildEnvelop());
+    console.log(req);
+    xhttp.send(req);
 }
 
 function importPublicKey(data) {
@@ -57,9 +59,12 @@ function importPublicKey(data) {
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            let env = new Envelop;
-            env.fromEnvelop(this.responseText);
-            state.scrypt.serverPub = pki.publicKeyFromPem(env.key);
+            console.log(this.responseText);
+            let x = String(this.responseText);
+            x = x.split("&#xA;").join("");
+            x = x.split("\n").join("");
+            console.log(x);
+            state.scrypt.serverPub = pki.publicKeyFromPem(x);
             reportState("imported");
             sendAESKey();
         } else {
@@ -221,12 +226,12 @@ class Envelop{
     }
 
     fromEnvelop(params) {
-        xmlDoc = parser.parseFromString(params, "text/xml");
+        let xmlDoc = parser.parseFromString(params, "text/xml");
         this.encryption = xmlDoc.getElementsByTagName("encryption");
         this.body = xmlDoc.getElementsByTagName("Body");
         this.key = xmlDoc.getElementsByTagName("Key");
         this.check = xmlDoc.getElementsByTagName("Check");
-        if (this.encryption) {
+        if (this.encryption == true) {
             let decipher = forge.cipher.createDecipher('AES-CBC', state.scrypt.symmetricKey);
             decipher.start({iv: this.key});
             decipher.update(this.body);

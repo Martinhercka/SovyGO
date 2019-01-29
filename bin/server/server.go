@@ -1,12 +1,15 @@
 package server
 
 import (
+	"log"
+
 	"github.com/michalnov/SovyGo/bin/server/core"
 	"github.com/michalnov/SovyGo/bin/server/modules/persistance"
 
 	"fmt"
 	"net/http"
 
+	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 )
 
@@ -30,6 +33,7 @@ func (s *Server) StartServer() error {
 
 	s.r = mux.NewRouter()
 	s.r.HandleFunc("/", homeHandler)
+	//s.r.HandleFunc()
 	s.r.HandleFunc("/key/new/", func(w http.ResponseWriter, r *http.Request) {
 		core.NewKey(w, r, &s.state)
 	})
@@ -43,7 +47,7 @@ func (s *Server) StartServer() error {
 	})
 	s.r.HandleFunc("/hello", notImplemented)
 	http.Handle("/", s.r)
-	http.ListenAndServe(":1122", s.r)
+	log.Fatal(http.ListenAndServe(":1122", handlers.CORS(handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"}), handlers.AllowedMethods([]string{"GET", "POST", "PUT", "HEAD", "OPTIONS"}), handlers.AllowedOrigins([]string{"*"}))(s.r)))
 	return nil
 }
 
