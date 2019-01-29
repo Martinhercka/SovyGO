@@ -1,25 +1,17 @@
 package authentication
 
-//loginReq request used for login authentication
-type loginReq struct {
+import (
+	s "github.com/michalnov/SovyGo/bin/server/modules/structures"
+)
+
+//Autheticate handle proces of user login
+func Autheticate(req s.LoginRequest) bool {
+
+	return false
 }
 
-//loginRes response used for login authentication
-type loginRes struct {
-}
+//Signup handle proces of creating new user account
+func Signup(req s.RegisterRequest) bool {
 
-//login proces of login
-func login() {
-
-}
-
-type signinReq struct {
-}
-
-func signin() {
-
-}
-
-func newToken() {
-
+	return false
 }
