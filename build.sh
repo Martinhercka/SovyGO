@@ -1,2 +1,2 @@
 #!/bin/sh
-go build -o server bin/main.go
+go build -o build/server bin/main.go
