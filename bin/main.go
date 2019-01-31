@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/michalnov/SovyGo/bin/server"
+	"github.com/Martinhercka/SovyGo/bin/server"
 )
 
 func main() {

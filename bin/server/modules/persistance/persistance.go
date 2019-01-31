@@ -5,9 +5,9 @@ import (
 	"crypto/rsa"
 	"fmt"
 
-	"github.com/michalnov/SovyGo/bin/server/modules/authentication"
-	a "github.com/michalnov/SovyGo/bin/server/modules/authentication"
-	s "github.com/michalnov/SovyGo/bin/server/modules/structures"
+	"github.com/Martinhercka/SovyGo/bin/server/modules/authentication"
+	a "github.com/Martinhercka/SovyGo/bin/server/modules/authentication"
+	s "github.com/Martinhercka/SovyGo/bin/server/modules/structures"
 )
 
 //Persistance struct

@@ -1,8 +1,8 @@
 package database
 
 import (
+	s "github.com/Martinhercka/SovyGo/bin/server/modules/structures"
 	_ "github.com/go-sql-driver/mysql" //needed
-	s "github.com/michalnov/SovyGo/bin/server/modules/structures"
 )
 
 //Signup provide creation of user in database

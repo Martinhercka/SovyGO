@@ -3,8 +3,8 @@ package server
 import (
 	"log"
 
-	"github.com/michalnov/SovyGo/bin/server/core"
-	"github.com/michalnov/SovyGo/bin/server/modules/persistance"
+	"github.com/Martinhercka/SovyGo/bin/server/core"
+	"github.com/Martinhercka/SovyGo/bin/server/modules/persistance"
 
 	"fmt"
 	"net/http"

@@ -1,7 +1,7 @@
 package authentication
 
 import (
-	s "github.com/michalnov/SovyGo/bin/server/modules/structures"
+	s "github.com/Martinhercka/SovyGo/bin/server/modules/structures"
 )
 
 //Autheticate handle proces of user login

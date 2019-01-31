@@ -3,7 +3,7 @@ package database
 import (
 	"database/sql"
 
-	"github.com/michalnov/SovyGo/bin/server/modules/configuration"
+	"github.com/Martinhercka/SovyGo/bin/server/modules/configuration"
 
 	_ "github.com/go-sql-driver/mysql" //needed
 )

@@ -3,8 +3,8 @@ package core
 import (
 	"net/http"
 
-	"github.com/michalnov/SovyGo/bin/server/modules/persistance"
-	s "github.com/michalnov/SovyGo/bin/server/modules/structures"
+	"github.com/Martinhercka/SovyGo/bin/server/modules/persistance"
+	s "github.com/Martinhercka/SovyGo/bin/server/modules/structures"
 )
 
 //LoginHandler handle proces of user login

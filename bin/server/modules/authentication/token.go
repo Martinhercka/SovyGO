@@ -9,7 +9,7 @@ import (
 	"fmt"
 	"time"
 
-	s "github.com/michalnov/SovyGo/bin/server/modules/structures"
+	s "github.com/Martinhercka/SovyGo/bin/server/modules/structures"
 )
 
 //Token structure used as storage for authentication data
