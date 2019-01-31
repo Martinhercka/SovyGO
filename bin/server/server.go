@@ -11,13 +11,17 @@ import (
 
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
+	"github.com/gorilla/websocket"
 )
+
+var upgrader = websocket.Upgrader{}
 
 //Server structure that hold all parts of application
 type Server struct {
 	r           *mux.Router
 	degradation chan int
 	state       persistance.Persistance
+	core        core.Core
 }
 
 //SetupServer prepare new server structure
@@ -30,10 +34,19 @@ func (s *Server) SetupServer(degradation chan int) error {
 
 //StartServer create routes and execute http.listenAndServe
 func (s *Server) StartServer() error {
-
+	var err error
+	s.core, err = core.NewCore()
+	if err != nil {
+		return err
+	}
 	s.r = mux.NewRouter()
-	s.r.HandleFunc("/", homeHandler)
-	//s.r.HandleFunc()
+	s.r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "web_files/test.html")
+	})
+	s.r.HandleFunc("/home", s.core.HomeHandler)
+	s.r.HandleFunc("/register", s.core.RegisterHandler)
+	s.r.HandleFunc("/login", s.core.LoginHandler)
+	s.r.HandleFunc("/test", s.core.TestHandler)
 	s.r.HandleFunc("/key/new/", func(w http.ResponseWriter, r *http.Request) {
 		core.NewKey(w, r, &s.state)
 	})
@@ -47,13 +60,13 @@ func (s *Server) StartServer() error {
 	})
 	s.r.HandleFunc("/hello", notImplemented)
 	http.Handle("/", s.r)
-	log.Fatal(http.ListenAndServe(":1122", handlers.CORS(handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"}), handlers.AllowedMethods([]string{"GET", "POST", "PUT", "HEAD", "OPTIONS"}), handlers.AllowedOrigins([]string{"*"}))(s.r)))
+	log.Fatal(http.ListenAndServe(s.core.Config.Server.Port, handlers.CORS(handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"}), handlers.AllowedMethods([]string{"GET", "POST", "PUT", "HEAD", "OPTIONS"}), handlers.AllowedOrigins([]string{"*"}))(s.r)))
 	return nil
 }
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
-	w.Write([]byte("Hello at Server Home"))
+	http.ServeFile(w, r, "web_files/test.html")
 }
 
 func notImplemented(w http.ResponseWriter, r *http.Request) {

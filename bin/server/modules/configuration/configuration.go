@@ -7,7 +7,8 @@ import (
 	"path/filepath"
 )
 
-type config struct {
+//Config hold all configuration data
+type Config struct {
 	Server   server   `json:"server,omitempty"`
 	Database database `json:"database,omitempty"`
 	Log      log      `json:"log,omitempty"`
@@ -21,6 +22,7 @@ func loadConfig() {
 type server struct {
 	Folder string `json:"folder,omitempty"`
 	Port   string `json:"port,omitempty"`
+	Host   string `json:"host,omitempty"`
 }
 
 type database struct {
@@ -48,8 +50,9 @@ type external struct {
 	Address string `json:"address,omitempty"`
 }
 
-func readConfig() (config, error) {
-	out := config{}
+//ReadConfig return structure of configuration
+func ReadConfig() (Config, error) {
+	out := Config{}
 	absPath, _ := filepath.Abs("config/config.json")
 	fmt.Println("Database Opening configuration File")
 	temFile, err := ioutil.ReadFile(absPath)
@@ -67,7 +70,7 @@ func readConfig() (config, error) {
 
 //InitializeDb produce strings for acces to database
 func InitializeDb() (string, string, error) {
-	conf, err := readConfig()
+	conf, err := ReadConfig()
 	if err != nil {
 		return "", "", err
 	}
@@ -98,7 +101,7 @@ func isCorrectDB(dbIn db) bool {
 
 //LoadMysqlRoot return root password for master mysql database
 func LoadMysqlRoot() (string, error) {
-	conf, err := readConfig()
+	conf, err := ReadConfig()
 	if err != nil {
 		return "", err
 	}

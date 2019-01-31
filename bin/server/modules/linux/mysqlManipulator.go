@@ -3,7 +3,7 @@ package linux
 import (
 	"fmt"
 
-	"github.com/Martinhercka/SovyGo/bin/server/configuration"
+	"github.com/Martinhercka/SovyGo/bin/server/modules/configuration"
 )
 
 //Mysql contains methods for mannaging mysql server
@@ -26,6 +26,7 @@ func (m *Mysql) InsertUser() error {
 	return nil
 }
 
+//CreateDB -
 func (m *Mysql) CreateDB() error {
 
 	return nil
