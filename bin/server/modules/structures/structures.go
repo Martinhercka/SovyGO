@@ -22,8 +22,8 @@ type RegisterRequest struct {
 	Username string `json:"username,omitempty"`
 	Email    string `json:"email,omitempty"`
 	Password string `json:"password,omitempty"`
-	Class    string `json:"class,omitempty"`
-	Salt     string
+	//Class    string `json:"class,omitempty"`
+	//Salt     string
 }
 
 //SessionRequest req

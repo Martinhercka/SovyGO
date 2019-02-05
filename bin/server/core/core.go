@@ -1,6 +1,7 @@
 package core
 
 import (
+	"encoding/json"
 	"fmt"
 	"html/template"
 	"net/http"
@@ -8,6 +9,7 @@ import (
 
 	auth "github.com/Martinhercka/SovyGo/bin/server/modules/authentication"
 	conf "github.com/Martinhercka/SovyGo/bin/server/modules/configuration"
+	str "github.com/Martinhercka/SovyGo/bin/server/modules/structures"
 )
 
 //Core --
@@ -35,6 +37,7 @@ func NewCore() (Core, error) {
 		//return core, err
 	}
 	return core, nil
+
 }
 
 func (c *Core) loadTemplates() error {
@@ -80,6 +83,7 @@ func (c *Core) HomeHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("EEE 110")
 	//http.ServeFile(w, r, "web_files/test.html")
 	c.Templates["index"].Execute(w, "")
+
 }
 
 //LoginHandler serve main htm page
@@ -89,7 +93,18 @@ func (c *Core) LoginHandler(w http.ResponseWriter, r *http.Request) {
 
 //RegisterHandler serve main htm page
 func (c *Core) RegisterHandler(w http.ResponseWriter, r *http.Request) {
-	c.Templates["Register"].Execute(w, nil)
+	w.Header().Set("Content-Type", "application/json")
+	var registerCred []str.RegisterRequest
+	var reg str.RegisterRequest
+	_ = json.NewDecoder(r.Body).Decode(&reg)
+
+	registerCred = append(registerCred, reg)
+
+	fmt.Println(reg.Username) //Test print
+	fmt.Println(reg.Email)    //Test print
+	fmt.Println(reg.Password) //Test print
+	c.Templates["register"].Execute(w, nil)
+
 }
 
 //TestHandler serve main htm page
