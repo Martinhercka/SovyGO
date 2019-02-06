@@ -44,6 +44,7 @@ func NewCore() (Core, error) {
 		panic(err)
 	}
 	fmt.Println("Result of test database: ", core.DB.TestConnection())
+
 	return core, nil
 
 }
@@ -84,6 +85,7 @@ func laodTemplate(path string) *template.Template {
 	}
 	//fmt.Println("iii")
 	return tmpl
+
 }
 
 //HomeHandler serve main htm page
@@ -110,7 +112,9 @@ func (c *Core) RegisterHandler(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Println(reg.Username) //Test print
 	fmt.Println(reg.Email)    //Test print
-	fmt.Println(reg.Password) //Test print
+	fmt.Println(reg.Password)
+
+	//Test print
 	//c.Templates["register"].Execute(w, nil)
 
 }

@@ -6,7 +6,7 @@ import (
 	"gopkg.in/gomail.v2"
 )
 
-func activationMail(email string) {
+func Activationmail(email string) {
 	fmt.Println("Hi")
 	m := gomail.NewMessage()
 	m.SetHeader("From", "MailSender")
@@ -17,8 +17,8 @@ func activationMail(email string) {
 
 	d := gomail.NewDialer("smtp.gmail.com", 587, "exampleSenderMail", "MailSenderPassword")
 
-	// Send the email to Bob, Cora and Dan.
 	if err := d.DialAndSend(m); err != nil {
 		panic(err)
 	}
+
 }
