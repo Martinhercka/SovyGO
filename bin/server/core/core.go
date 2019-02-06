@@ -10,6 +10,7 @@ import (
 	auth "github.com/Martinhercka/SovyGo/bin/server/modules/authentication"
 	conf "github.com/Martinhercka/SovyGo/bin/server/modules/configuration"
 	dtb "github.com/Martinhercka/SovyGo/bin/server/modules/database"
+	m "github.com/Martinhercka/SovyGo/bin/server/modules/mailer"
 	str "github.com/Martinhercka/SovyGo/bin/server/modules/structures"
 )
 
@@ -109,11 +110,12 @@ func (c *Core) RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	_ = json.NewDecoder(r.Body).Decode(&reg)
 
 	registerCred = append(registerCred, reg)
-
+	var email string
+	email = reg.Email
 	fmt.Println(reg.Username) //Test print
 	fmt.Println(reg.Email)    //Test print
 	fmt.Println(reg.Password)
-
+	m.Activationmail(email)
 	//Test print
 	//c.Templates["register"].Execute(w, nil)
 
