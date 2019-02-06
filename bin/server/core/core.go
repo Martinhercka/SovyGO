@@ -9,6 +9,7 @@ import (
 
 	auth "github.com/Martinhercka/SovyGo/bin/server/modules/authentication"
 	conf "github.com/Martinhercka/SovyGo/bin/server/modules/configuration"
+	dtb "github.com/Martinhercka/SovyGo/bin/server/modules/database"
 	str "github.com/Martinhercka/SovyGo/bin/server/modules/structures"
 )
 
@@ -17,6 +18,7 @@ type Core struct {
 	Config    conf.Config
 	clients   []session
 	Templates map[string]*template.Template
+	DB        dtb.Database
 }
 
 type session struct {
@@ -32,10 +34,16 @@ func NewCore() (Core, error) {
 	core.Config, err = conf.ReadConfig()
 	core.loadTemplates()
 	if err != nil {
-		fmt.Printf("error while loading")
+		fmt.Printf("error while loading templates")
 		panic(err)
 		//return core, err
 	}
+	core.DB, err = dtb.NewDatabase()
+	if err != nil {
+		fmt.Printf("error while loading Database")
+		panic(err)
+	}
+	fmt.Println("Result of test database: ", core.DB.TestConnection())
 	return core, nil
 
 }
@@ -88,7 +96,7 @@ func (c *Core) HomeHandler(w http.ResponseWriter, r *http.Request) {
 
 //LoginHandler serve main htm page
 func (c *Core) LoginHandler(w http.ResponseWriter, r *http.Request) {
-	c.Templates["login"].Execute(w, nil)
+	//c.Templates["login"].Execute(w, nil)
 }
 
 //RegisterHandler serve main htm page
@@ -103,6 +111,18 @@ func (c *Core) RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(reg.Username) //Test print
 	fmt.Println(reg.Email)    //Test print
 	fmt.Println(reg.Password) //Test print
+	//c.Templates["register"].Execute(w, nil)
+
+}
+
+//LoginPageHandler serve main htm page
+func (c *Core) LoginPageHandler(w http.ResponseWriter, r *http.Request) {
+	c.Templates["login"].Execute(w, nil)
+}
+
+//RegisterPageHandler serve main htm page
+func (c *Core) RegisterPageHandler(w http.ResponseWriter, r *http.Request) {
+	//w.Header().Set("Content-Type", "application/json")
 	c.Templates["register"].Execute(w, nil)
 
 }

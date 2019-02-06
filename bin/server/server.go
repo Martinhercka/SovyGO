@@ -44,9 +44,11 @@ func (s *Server) StartServer() error {
 		http.ServeFile(w, r, "web_files/test.html")
 	})
 	s.r.HandleFunc("/home", s.core.HomeHandler)
-	s.r.HandleFunc("/register", s.core.RegisterHandler)
-	s.r.HandleFunc("/login", s.core.LoginHandler)
+	s.r.HandleFunc("/register", s.core.RegisterPageHandler)
+	s.r.HandleFunc("/login", s.core.LoginPageHandler)
 	s.r.HandleFunc("/test", s.core.TestHandler)
+	s.r.HandleFunc("/auth/register", s.core.RegisterHandler)
+	s.r.HandleFunc("/auth/login", s.core.LoginHandler)
 	s.r.HandleFunc("/key/new/", func(w http.ResponseWriter, r *http.Request) {
 		core.NewKey(w, r, &s.state)
 	})

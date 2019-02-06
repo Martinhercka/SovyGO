@@ -40,7 +40,7 @@ func NewDatabase() (Database, error) {
 }
 
 //TestConnection test of connection while creating DB
-func (d *Database) testConnection() bool {
+func (d *Database) TestConnection() bool {
 	db, err := sql.Open("mysql", d.master.acces)
 	if err != nil {
 		return false
