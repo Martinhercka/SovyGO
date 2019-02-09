@@ -3,6 +3,7 @@ package database
 import (
 	"database/sql"
 	"errors"
+	"fmt"
 
 	scr "github.com/Martinhercka/SovyGo/bin/server/modules/scrypto"
 	s "github.com/Martinhercka/SovyGo/bin/server/modules/structures"
@@ -13,27 +14,33 @@ import (
 func (d *Database) UserSignup(req s.RegisterRequest) error {
 	salted, salt := scr.NewPasswordHash(req.Password)
 	var iduser int
+	fmt.Println(d.master.acces)
 	db, err := sql.Open("mysql", d.master.acces)
 	if err != nil {
+		panic(err)
 		return errors.New("failed to open database")
 	}
 	defer db.Close()
 	statement, err := db.Prepare("insert into user(username, salt, password, auth, email) values(?,?,?,?,?)")
 	if err != nil {
+		panic(err)
 		return errors.New("failed to prepare statement")
 	}
 	_, err = statement.Exec(req.Username, salt, salted, "user", req.Email)
 	if err != nil {
+		panic(err)
 		return errors.New("error while execution of query")
 	}
 	statement, err = db.Prepare("select iduser from user where username = ?")
-	err = statement.QueryRow(req.Username).Scan(iduser)
+	err = statement.QueryRow(req.Username).Scan(&iduser)
 	if err != nil {
+		panic(err)
 		return errors.New("error while execution of query")
 	}
 	statement, err = db.Prepare("insert into userdetail(userid, name, surname, email, class) values (?,?,?,?,?)")
 	_, err = statement.Exec(iduser, req.Name, req.Surname, req.Email, req.Class)
 	if err != nil {
+		panic(err)
 		return errors.New("error while execution of query")
 	}
 	return nil

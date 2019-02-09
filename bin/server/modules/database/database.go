@@ -2,6 +2,7 @@ package database
 
 import (
 	"database/sql"
+	"fmt"
 
 	"github.com/Martinhercka/SovyGo/bin/server/modules/configuration"
 
@@ -41,6 +42,9 @@ func NewDatabase() (Database, error) {
 		out.root.acces = root
 		out.root.active = true
 	}
+	fmt.Println(out.master.acces)
+	fmt.Println(out.root.acces)
+	fmt.Println(out.log.acces)
 	return out, nil
 }
 

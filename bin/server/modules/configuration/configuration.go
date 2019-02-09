@@ -99,9 +99,9 @@ func InitializeDb() (string, string, string, error) {
 }
 
 func buildDbString(dbIn db) string {
-	if isCorrectDB(dbIn) {
-		return ""
-	}
+	//if isCorrectDB(dbIn) {
+	//	return ""
+	//}
 	return dbIn.User + ":" + dbIn.Password + "@tcp(" + dbIn.Address + ":" + dbIn.Port + ")/" + dbIn.Name
 }
 
