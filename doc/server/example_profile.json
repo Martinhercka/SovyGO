@@ -1,0 +1,29 @@
+{
+    "host" : "itsovy.sk:1122",
+    "user" : {
+        "username" : "doej",
+        "profilePhoto" : "default_profile.png",
+        "firstName" : "John",
+        "lastName" : "Doe",
+        "email" : "john.doe@mail.com",
+        "class" : "nN",
+        "phone" : "0000000000",
+        "personalWebsite" : "googe.com",
+        "know" : [
+            {
+                "skill" : "C",
+                "level" : "advanced"
+            },
+            {
+                "skill" : "GO",
+                "level" : "advanced"
+            }],
+        "following" : [
+            {
+                "user" : "doej2"
+            },
+            {
+                "user" : "doej3"
+            }]
+    }
+}

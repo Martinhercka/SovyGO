@@ -11,6 +11,7 @@ import (
 //Database is structure of database manipulator
 type Database struct {
 	master masterDb
+	root   db
 	log    db
 }
 
@@ -27,7 +28,7 @@ type db struct {
 //NewDatabase return new structure of database manipulator
 func NewDatabase() (Database, error) {
 	out := Database{}
-	master, slave, err := configuration.InitializeDb()
+	master, slave, root, err := configuration.InitializeDb()
 	if err != nil {
 		return out, err
 	}
@@ -35,6 +36,10 @@ func NewDatabase() (Database, error) {
 	if slave != "" {
 		out.master.slave.acces = slave
 		out.master.slave.active = true
+	}
+	if root != "" {
+		out.root.acces = root
+		out.root.active = true
 	}
 	return out, nil
 }

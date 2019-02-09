@@ -28,6 +28,7 @@ type server struct {
 type database struct {
 	Master db `json:"master,omitempty"`
 	Slave  db `json:"slave,omitempty"`
+	Root   db `json:"root,omitempty"`
 }
 
 type db struct {
@@ -69,20 +70,32 @@ func ReadConfig() (Config, error) {
 }
 
 //InitializeDb produce strings for acces to database
-func InitializeDb() (string, string, error) {
+func InitializeDb() (string, string, string, error) {
 	conf, err := ReadConfig()
 	if err != nil {
-		return "", "", err
+		return "", "", "", err
 	}
 	master := ""
 	slave := ""
+	root := ""
 	master = buildDbString(conf.Database.Master)
+	root = buildDbString(conf.Database.Root)
+	if conf.Database.Master.Active {
+		fmt.Println("Database Master status: active")
+	} else {
+		fmt.Println("Database Master status: INactive")
+	}
+	if conf.Database.Root.Active {
+		fmt.Println("Database ROOT status: active")
+	} else {
+		fmt.Println("Database ROOT status: INactive")
+	}
 	if conf.Database.Slave.Active {
-		fmt.Println("LOG status: active")
+		fmt.Println("LOG SLAVE status: active")
 		slave = buildDbString(conf.Database.Slave)
 	}
-	fmt.Println("Database setup: succes")
-	return master, slave, nil
+	fmt.Println("Database config load: succes")
+	return master, slave, root, nil
 }
 
 func buildDbString(dbIn db) string {

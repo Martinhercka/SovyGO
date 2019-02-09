@@ -20,6 +20,14 @@
             "port" : "3306",
             "name" : "sovyServer",
             "address" : "127.0.0.1"
+        },
+        "root" : {
+            "active" : false,
+            "user": "root",
+            "password": "secret",
+            "port" : "3306",
+            "name" : "",
+            "address" : "127.0.0.1"
         }
     },
     "log" : {

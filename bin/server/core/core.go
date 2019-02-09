@@ -33,6 +33,7 @@ func NewCore() (Core, error) {
 	var core Core
 	var err error
 	core.Config, err = conf.ReadConfig()
+	core.DB = dtb.NewDatabase()
 	core.loadTemplates()
 	if err != nil {
 		fmt.Printf("error while loading templates")
