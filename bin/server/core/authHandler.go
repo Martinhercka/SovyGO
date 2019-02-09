@@ -2,6 +2,7 @@ package core
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 
 	m "github.com/Martinhercka/SovyGo/bin/server/modules/mailer"
@@ -27,7 +28,7 @@ func (c *Core) LoginHandler(w http.ResponseWriter, r *http.Request) {
 			panic(err)
 		}
 	}
-
+	fmt.Println(user.User.Email)
 	sendSimpleMsg(w, http.StatusAccepted, "status OK")
 }
 

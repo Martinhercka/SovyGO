@@ -12,16 +12,27 @@ import (
 //UserSignup provide creation of user in database
 func (d *Database) UserSignup(req s.RegisterRequest) error {
 	salted, salt := scr.NewPasswordHash(req.Password)
+	var iduser int
 	db, err := sql.Open("mysql", d.master.acces)
 	if err != nil {
 		return errors.New("failed to open database")
 	}
 	defer db.Close()
-	statement, err := db.Prepare("insert into user(username, name, surname, salt, password, auth)values(?,?,?,?,?,?)")
+	statement, err := db.Prepare("insert into user(username, salt, password, auth, email) values(?,?,?,?,?)")
 	if err != nil {
 		return errors.New("failed to prepare statement")
 	}
-	_, err = statement.Exec(req.Username, req.Name, req.Surname, salt, salted, "user")
+	_, err = statement.Exec(req.Username, salt, salted, "user", req.Email)
+	if err != nil {
+		return errors.New("error while execution of query")
+	}
+	statement, err = db.Prepare("select iduser from user where username = ?")
+	err = statement.QueryRow(req.Username).Scan(iduser)
+	if err != nil {
+		return errors.New("error while execution of query")
+	}
+	statement, err = db.Prepare("insert into userdetail(userid, name, surname, email, class) values (?,?,?,?,?)")
+	_, err = statement.Exec(iduser, req.Name, req.Surname, req.Email, req.Class)
 	if err != nil {
 		return errors.New("error while execution of query")
 	}
