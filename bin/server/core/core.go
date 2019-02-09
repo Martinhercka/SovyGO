@@ -1,7 +1,6 @@
 package core
 
 import (
-	"encoding/json"
 	"fmt"
 	"html/template"
 	"net/http"
@@ -10,7 +9,6 @@ import (
 	auth "github.com/Martinhercka/SovyGo/bin/server/modules/authentication"
 	conf "github.com/Martinhercka/SovyGo/bin/server/modules/configuration"
 	dtb "github.com/Martinhercka/SovyGo/bin/server/modules/database"
-	m "github.com/Martinhercka/SovyGo/bin/server/modules/mailer"
 	str "github.com/Martinhercka/SovyGo/bin/server/modules/structures"
 )
 
@@ -26,6 +24,7 @@ type session struct {
 	sessionID string
 	login     bool
 	token     auth.Token
+	user      str.UserIn
 }
 
 //NewCore ---
@@ -33,7 +32,14 @@ func NewCore() (Core, error) {
 	var core Core
 	var err error
 	core.Config, err = conf.ReadConfig()
-	core.DB = dtb.NewDatabase()
+	if err != nil {
+		fmt.Println("error read config")
+		panic(err)
+	}
+	core.DB, err = dtb.NewDatabase()
+	if err != nil {
+		fmt.Println("error in creating of database structure")
+	}
 	core.loadTemplates()
 	if err != nil {
 		fmt.Printf("error while loading templates")
@@ -98,30 +104,6 @@ func (c *Core) HomeHandler(w http.ResponseWriter, r *http.Request) {
 
 }
 
-//LoginHandler serve main htm page
-func (c *Core) LoginHandler(w http.ResponseWriter, r *http.Request) {
-	//c.Templates["login"].Execute(w, nil)
-}
-
-//RegisterHandler serve main htm page
-func (c *Core) RegisterHandler(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-	var registerCred []str.RegisterRequest
-	var reg str.RegisterRequest
-	_ = json.NewDecoder(r.Body).Decode(&reg)
-
-	registerCred = append(registerCred, reg)
-	var email string
-	email = reg.Email
-	fmt.Println(reg.Username) //Test print
-	fmt.Println(reg.Email)    //Test print
-	fmt.Println(reg.Password)
-	m.Activationmail(email)
-	//Test print
-	//c.Templates["register"].Execute(w, nil)
-
-}
-
 //LoginPageHandler serve main htm page
 func (c *Core) LoginPageHandler(w http.ResponseWriter, r *http.Request) {
 	c.Templates["login"].Execute(w, nil)
@@ -137,4 +119,9 @@ func (c *Core) RegisterPageHandler(w http.ResponseWriter, r *http.Request) {
 //TestHandler serve main htm page
 func (c *Core) TestHandler(w http.ResponseWriter, r *http.Request) {
 	c.Templates["test"].Execute(w, nil)
+}
+
+func sendSimpleMsg(w http.ResponseWriter, code int, msg string) {
+	w.WriteHeader(code)
+	fmt.Fprintf(w, msg)
 }

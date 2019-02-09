@@ -41,6 +41,21 @@ func Hasher(key string) string {
 	return hex.EncodeToString(hasher.Sum(nil))
 }
 
+//NewRandomPassword generate random password
+func NewRandomPassword() string {
+	s := rnd.NewSource(time.Now().Unix())
+	r := rnd.New(s)
+	var out string
+	for i := 0; i < 4; i++ {
+		out += characters[r.Intn(len(characters))]
+	}
+	out += "#"
+	for i := 0; i < 4; i++ {
+		out += characters[r.Intn(len(characters))]
+	}
+	return out
+}
+
 func newSalt() string {
 	s := rnd.NewSource(time.Now().Unix())
 	r := rnd.New(s)

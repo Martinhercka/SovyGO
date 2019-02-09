@@ -9,8 +9,8 @@ import (
 	_ "github.com/go-sql-driver/mysql" //needed
 )
 
-//Signup provide creation of user in database
-func (d *Database) Signup(req s.RegisterRequest) error {
+//UserSignup provide creation of user in database
+func (d *Database) UserSignup(req s.RegisterRequest) error {
 	salted, salt := scr.NewPasswordHash(req.Password)
 	db, err := sql.Open("mysql", d.master.acces)
 	if err != nil {
@@ -28,8 +28,8 @@ func (d *Database) Signup(req s.RegisterRequest) error {
 	return nil
 }
 
-//LoginRead provide read of login data
-func (d *Database) LoginRead(req s.LoginRequest) (s.UserIn, error) {
+//UserLoginRead provide read of login data
+func (d *Database) UserLoginRead(req s.LoginRequest) (s.UserIn, error) {
 	var u s.UserIn
 	db, err := sql.Open("mysql", d.master.acces)
 	if err != nil {
@@ -42,11 +42,94 @@ func (d *Database) LoginRead(req s.LoginRequest) (s.UserIn, error) {
 	if err != nil {
 		return u, errors.New("failed to read row")
 	}
-	return u, nil
+	accepted := scr.MatchPasswordHash(req.Password, u.User.Salt, u.User.Password)
+	if accepted {
+		d.userLoginSucces(u.User.UserID)
+		return u, nil
+	}
+	d.userLoginFail(u.User.UserID)
+	return u, errors.New("wrong password")
 }
 
-//LoginSucces provide write succes record of login
-func (d *Database) LoginSucces(userID int) error {
+//UserChangePassword provide write succes record of login
+func (d *Database) UserChangePassword(userID int, newPass string) error {
+	salted, salt := scr.NewPasswordHash(newPass)
+	db, err := sql.Open("mysql", d.master.acces)
+	if err != nil {
+		return errors.New("failed to open database")
+	}
+	defer db.Close()
+	statement, err := db.Prepare("update user set password = ?, salt = ? where iduser = ?")
+	if err != nil {
+		return errors.New("failed to prepare statement")
+	}
+	_, err = statement.Exec(salted, salt, userID)
+	if err != nil {
+		return errors.New("error while execution of query")
+	}
+	return nil
+}
+
+//UserResetPassword provide write succes record of login
+func (d *Database) UserResetPassword(userID int) (string, error) {
+	newPass := scr.NewRandomPassword()
+	salted, salt := scr.NewPasswordHash(newPass)
+	db, err := sql.Open("mysql", d.master.acces)
+	if err != nil {
+		return "", errors.New("failed to open database")
+	}
+	defer db.Close()
+	statement, err := db.Prepare("update user set password = ?, salt = ?, where iduser = ?")
+	if err != nil {
+		return "", errors.New("failed to prepare statement")
+	}
+	_, err = statement.Exec(salted, salt, userID)
+	if err != nil {
+		return "", errors.New("error while execution of query")
+	}
+	return newPass, nil
+}
+
+//UserArchive provide write succes record of login
+func (d *Database) UserArchive(userID int) error {
+	db, err := sql.Open("mysql", d.master.acces)
+	if err != nil {
+		return errors.New("failed to open database")
+	}
+	defer db.Close()
+	statement, err := db.Prepare("update user set password = '', salt = '', auth = '' where iduser = ?")
+	if err != nil {
+		return errors.New("failed to prepare statement")
+	}
+	_, err = statement.Exec(userID)
+	if err != nil {
+		return errors.New("error while execution of query")
+	}
+	return nil
+}
+
+//UserUnArchive provide write succes record of login
+func (d *Database) UserUnArchive(userID int) (string, error) {
+	newPass := scr.NewRandomPassword()
+	salted, salt := scr.NewPasswordHash(newPass)
+	db, err := sql.Open("mysql", d.master.acces)
+	if err != nil {
+		return "", errors.New("failed to open database")
+	}
+	defer db.Close()
+	statement, err := db.Prepare("update user set password = ?, salt = ?, auth = 'user' where iduser = ?")
+	if err != nil {
+		return "", errors.New("failed to prepare statement")
+	}
+	_, err = statement.Exec(salted, salt, userID)
+	if err != nil {
+		return "", errors.New("error while execution of query")
+	}
+	return newPass, nil
+}
+
+//UserLoginSucces provide write succes record of login
+func (d *Database) userLoginSucces(userID int) error {
 	db, err := sql.Open("mysql", d.master.acces)
 	if err != nil {
 		return errors.New("failed to open database")
@@ -63,8 +146,8 @@ func (d *Database) LoginSucces(userID int) error {
 	return nil
 }
 
-//LoginFail provide write of fail to login into DB
-func (d *Database) LoginFail(userID int) error {
+//UserLoginFail provide write of fail to login into DB
+func (d *Database) userLoginFail(userID int) error {
 	db, err := sql.Open("mysql", d.master.acces)
 	if err != nil {
 		return errors.New("failed to open database")
