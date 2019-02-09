@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded',function(){
 		});
 	}
 
-	
+
 		// Listen to scroll position changes
 	window.addEventListener("scroll",function(){
 
@@ -130,11 +130,11 @@ document.addEventListener('DOMContentLoaded',function(){
 	});
 
 	// Responsive mobile menu
-	// Create the menu 
+	// Create the menu
 	if (document.getElementsByClassName("nav__mobile") && document.getElementsByClassName('nav__mobile').length > 0){
 		var navElements = document.getElementsByClassName('navbar__menu')[0].innerHTML;
 		document.getElementsByClassName('nav__mobile')[0].innerHTML = navElements;
-		// Load 
+		// Load
 		var nav = responsiveNav(".nav__mobile", { // Selector
 			animate: true, // Boolean: Use CSS3 transitions, true or false
 			transition: 284, // Integer: Speed of the transition, in milliseconds
@@ -147,7 +147,7 @@ document.addEventListener('DOMContentLoaded',function(){
 	} else {
 		 addNewClass(document.querySelector('.navbar__menu'),'navbar__menu--noMob');
 		 addNewClass(document.querySelector('.navbar__menu-mob'), 'navbar__menu-mob--noMob');
-	};	
+	};
 });
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.flexibility = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 module.exports = function alignContent(target) {
@@ -815,7 +815,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
   var responsiveNav = function (el, options) {
 
     var computed = !!window.getComputedStyle;
-    
+
     /**
      * getComputedStyle polyfill for old browsers
      */
@@ -838,7 +838,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
       };
     }
     /* exported addEvent, removeEvent, getChildren, setAttributes, addClass, removeClass, forEach */
-    
+
     /**
      * Add Event
      * fn arg can be an object or a function, thanks to handleEvent
@@ -876,7 +876,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
           }
         }
       },
-    
+
       /**
        * Remove Event
        *
@@ -908,7 +908,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
           }
         }
       },
-    
+
       /**
        * Get the children of any element
        *
@@ -929,7 +929,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         }
         return children;
       },
-    
+
       /**
        * Sets multiple attributes at once
        *
@@ -941,7 +941,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
           el.setAttribute(key, attrs[key]);
         }
       },
-    
+
       /**
        * Adds a class to any element
        *
@@ -954,7 +954,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
           el.className = el.className.replace(/(^\s*)|(\s*$)/g,"");
         }
       },
-    
+
       /**
        * Remove a class from any element
        *
@@ -965,7 +965,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         var reg = new RegExp("(\\s|^)" + cls + "(\\s|$)");
         el.className = el.className.replace(reg, " ").replace(/(^\s*)|(\s*$)/g,"");
       },
-    
+
       /**
        * forEach method that passes back the stuff we need
        *
@@ -1459,9 +1459,13 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
   } else {
     window.responsiveNav = responsiveNav;
 	}
-	
-	$("#knowledgeList").click(function(){
+
+
+
+
+	$("#addBtn").click(function(){
 		$( "#appendKnowledge" ).append(   "<select class=\"form-control\" id=\"knowledgeList\">"+
+		"<option value=\"\" selected disabled hidden>Choose option...</option>"+
 		"<option>C#</option>"+
 		"<option>Java</option>"+
 		"<option>NodeJS</option>"+
@@ -1469,18 +1473,33 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 		"<option>HTML</option>"+
 		"<option>CSS</option>"+
 		"<option>MySQL</option>"+
-		"</select> ");
+		"</select>");
 
-		$( "#appendLevel" ).append(   "<select class=\"form-control\" id=\"levelList\">"+
-		"<option>1</option>"+
-		"<option>2</option>"+
-		"<option>3</option>"+
-		"<option>4</option>"+
-		"<option>5</option>"+
-		"</select> ");
+
+
+
+					$( "#appendLevel" ).append(   "<select class=\"form-control\" id=\"levelList\">"+
+					"<option value=\"\" selected disabled hidden>Choose option...</option>"+
+					"<option>1</option>"+
+					"<option>2</option>"+
+					"<option>3</option>"+
+					"<option>4</option>"+
+					"<option>5</option>"+
+					"</select> ");
+					counter++;
+	});
+var counter = 1;
+
+$("#delete").click(function(){
+	if(counter==1)
+	{
+
+	}
+	else{
+$('#appendKnowledge select').last().remove();
+$('#appendLevel select').last().remove();
+counter--;
+}
 	});
 
-	
-
-	
 }(document, window, 0));
