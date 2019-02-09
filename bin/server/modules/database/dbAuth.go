@@ -39,6 +39,8 @@ func (d *Database) UserSignup(req s.RegisterRequest) error {
 	}
 	statement, err = db.Prepare("insert into userdetail(userid, name, surname, email, class) values (?,?,?,?,?)")
 	_, err = statement.Exec(iduser, req.Name, req.Surname, req.Email, req.Class)
+	statement, err = db.Prepare("insert into lastlogin(userid, succes) values (?, 'n')")
+	_, err = statement.Exec(iduser)
 	if err != nil {
 		panic(err)
 		return errors.New("error while execution of query")
@@ -54,9 +56,9 @@ func (d *Database) UserLoginRead(req s.LoginRequest) (s.UserIn, error) {
 		return u, errors.New("failed to open database")
 	}
 	defer db.Close()
-	statement, err := db.Prepare("select iduser, name, surname, salt, password, auth from user where (username = ? or email = ?)")
+	statement, err := db.Prepare("select iduser, salt, password, auth from user where (username = ? or email = ?)")
 	defer statement.Close()
-	err = statement.QueryRow(req.Username, req.Email).Scan(u.User.UserID, u.User.Name, u.User.Surname, u.User.Salt, u.User.Password, u.User.Authority)
+	err = statement.QueryRow(req.Username, req.Email).Scan(&u.User.UserID, &u.User.Salt, &u.User.Password, &u.User.Authority)
 	if err != nil {
 		return u, errors.New("failed to read row")
 	}
