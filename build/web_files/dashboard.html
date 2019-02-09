@@ -9,9 +9,9 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 	<title>Profile page</title>
 	<link rel='stylesheet' href='css/style.css' />
-	
+
 </head>
-<script src='js/app.js'></script>
+
 <body>
 	<!-- navbar -->
 	<div class="navbar">
@@ -20,7 +20,7 @@
 			<div class="navbar__inner">
 				<a href="#" class="navbar__logo"><img id="golang" src="images/golang.png">GoWEB</a>
 				<nav class="navbar__menu">
-					<li><a href="#">Home</a></li>
+					<li><a href="index.html">Home</a></li>
 					<li><a href="#">Profile</a></li>
 					<li><a href="#">Profile</a></li>
 					<li><a href="#"></a></li>
@@ -34,84 +34,157 @@
 			</div>
 		</div>
 	</div>
+	<div class="modal fade" id="signInModal" role="dialog">
+		 <div class="modal-dialog">
+
+			 <!-- Modal content-->
+			 <div class="modal-content">
+				 <div class="modal-header">
+					 <button type="button" class="close" data-dismiss="modal">&times;</button>
+					 <h1 class="modal-title" style="text-align:center">Sign in</h1>
+				 </div>
+				 <div class="modal-body">
+			 <div class="auth__auth">
+				 <h1 class="auth__title" style="text-align:center">Access your account</h1>
+				 <p>Fill in your email and password to proceed</p>
+				 <form method='post' action="/example" autocompelete="new-password" role="presentation" class="form">
+					 <input name="email" class="fakefield">
+					 <label>Email</label>
+					 <input type="text" name="email" id='email' placeholder="you@example.com">
+					 <label>Password</label>
+					 <input type="password" name="password" id='password' placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" autocomplete="off">
+					 <button type='submit' class="button button__accent">Log in</button>
+					 <a href=""><h6 class="center-align" >Forgot your password?</h6></a>
+				 </form>
+			 </div>
+				 </div>
+				 <div class="modal-footer">
+					 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				 </div>
+			 </div>
+
+		 </div>
+	 </div>
+	 <div class="modal fade" id="signUpModal" role="dialog">
+		 <div class="modal-dialog">
+
+			 <!-- Modal content-->
+			 <div class="modal-content">
+				 <div class="modal-header">
+					 <button type="button" class="close" data-dismiss="modal">&times;</button>
+					 <h1 class="modal-title" style="text-align:center">Sign up</h1>
+				 </div>
+				 <div class="modal-body">
+			 <div class="auth__auth">
+				 <h1 class="auth__title" style="text-align:center">Create an account</h1>
+
+				 <form method='post' action="/example" autocompelete="new-password" role="presentation" class="form">
+					 <label>Username</label>
+					 <input type="text" id="username" class="fakefield">
+
+
+					 <label>Email</label>
+					 <input type="text" name="email" id="mail" placeholder="you@example.com">
+					 <label>Password</label>
+					 <input type="password" name="password" id="pass" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" autocomplete="off">
+					 <label>Confirm Password</label>
+					 <input type="password" name="password" id='confirmpassword' placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" autocomplete="off">
+					 <button type='button' id="registerBtn" class="button button__accent">Register</button>
+					 <a href=""><h6 class="center-align" >Forgot your password?</h6></a>
+				 </form>
+			 </div>
+				 </div>
+				 <div class="modal-footer">
+					 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				 </div>
+			 </div>
+
+		 </div>
+	 </div>
 	<!-- Page content -->
 	<div class="app">
 		<div class="container">
 			<div class="app__inner">
-				
+
 				<div class="container bootstrap snippet">
 					<div class="row">
 						  <div class="col-sm-10"><h1>User name</h1></div>
-						
+
 					</div>
 					<div class="row">
 						  <div class="col-sm-3"><!--left col-->
-							  
-				
+
+
 					  <div class="text-center">
 						<img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar img-circle img-thumbnail" alt="avatar">
 						<h6>Upload a different photo...</h6>
 						<input type="file" class="text-center center-block file-upload">
 					  </div></hr><br>
-				
-							   
+
+
 						  <div class="panel panel-default">
 							<div class="panel-heading">Website <i class="fa fa-link fa-1x"></i></div>
 							<div class="panel-body"><a href="http://bootnipets.com">bootnipets.com</a></div>
 						  </div>
-						  
-						  
+
+
 						  <ul class="list-group">
 							<li class="list-group-item text-muted">Activity <i class="fa fa-dashboard fa-1x"></i></li>
 							<li class="list-group-item text-right"><span class="pull-left"><strong>Shares</strong></span> 125</li>
 							<li class="list-group-item text-right"><span class="pull-left"><strong>Likes</strong></span> 13</li>
 							<li class="list-group-item text-right"><span class="pull-left"><strong>Posts</strong></span> 37</li>
 							<li class="list-group-item text-right"><span class="pull-left"><strong>Followers</strong></span> 78</li>
-						  </ul> 
-							   
+						  </ul>
+
 						  <div class="panel panel-default">
 							<div class="panel-heading">Social Media</div>
 							<div class="panel-body">
 								<i class="fa fa-facebook fa-2x"></i> <i class="fa fa-github fa-2x"></i> <i class="fa fa-twitter fa-2x"></i> <i class="fa fa-pinterest fa-2x"></i> <i class="fa fa-google-plus fa-2x"></i>
 							</div>
 						  </div>
-						  
+
 						</div><!--/col-3-->
 						<div class="col-sm-9">
 							<ul class="nav nav-tabs">
 								<li class="active"><a data-toggle="tab" href="#home">Home</a></li>
-								<li><a data-toggle="tab" href="#messages">Menu 1</a></li>
-								<li><a data-toggle="tab" href="#settings">Menu 2</a></li>
+
 							  </ul>
-				
-							  
+
+
 						  <div class="tab-content">
 							<div class="tab-pane active" id="home">
 								<hr>
 								  <form class="form" action="##" method="post" id="registrationForm">
 									  <div class="form-group">
-										  
+
 										  <div class="col-xs-6">
 											  <label for="first_name"><h4>First name</h4></label>
 											  <input type="text" class="form-control" name="first_name" id="first_name" placeholder="first name" title="enter your first name if any.">
 										  </div>
 									  </div>
 									  <div class="form-group">
-										  
+
 										  <div class="col-xs-6">
 											<label for="last_name"><h4>Last name</h4></label>
 											  <input type="text" class="form-control" name="last_name" id="last_name" placeholder="last name" title="enter your last name if any.">
 										  </div>
 									  </div>
-						  
+
 									  <div class="form-group">
-										  
+
 										  <div class="col-xs-6">
 											  <label for="phone"><h4>Class</h4></label>
-											  <input type="text" class="form-control" name="phone" id="phone" placeholder="enter your class" title="enter your phone number if any.">
+												<select class="form-control"  id="">
+												 <option value="" selected disabled hidden>Choose option...</option>
+											 <option>1.N</option>
+											 <option>2.N</option>
+											 <option>3.N</option>
+
+
+										 </select>
 										  </div>
 									  </div>
-						  
+
 									  <div class="form-group">
 										  <div class="col-xs-6">
 											 <label for="mobile"><h4>Mobile</h4></label>
@@ -119,25 +192,25 @@
 										  </div>
 									  </div>
 									  <div class="form-group">
-										  
+
 										  <div class="col-xs-6">
 											  <label for="email"><h4>Email</h4></label>
 											  <input type="email" class="form-control" name="email" id="email" placeholder="you@email.com" title="enter your email.">
 										  </div>
 									  </div>
 									  <div class="form-group">
-										  
+
 										  <div class="col-xs-6">
 											  <label for="email"><h4>Location</h4></label>
 											  <input type="email" class="form-control" id="location" placeholder="somewhere" title="enter a location">
 										  </div>
 									  </div>
 									  <div class="form-group">
-										  
+
 										  <div class="col-xs-6" id="appendKnowledge" >
 											  <label for="password"><h4>Knowledge</h4></label>
 											  <select class="form-control"  id="knowledgeList">
-													
+													<option value="" selected disabled hidden>Choose option...</option>
 												<option>C#</option>
 												<option>Java</option>
 												<option>NodeJS</option>
@@ -145,180 +218,52 @@
 												<option>HTML</option>
 												<option>CSS</option>
 												<option>MySQL</option>
-											  </select>
-											 
-											 
+
+											</select>
+
+
+
 										  </div>
 									  </div>
 									  <div class="form-group">
-										  
+
 										  <div class="col-xs-6" id="appendLevel">
 											<label for="password2"><h4>Level</h4></label>
 											<select class="form-control" id="levelList">
+												<option value="" selected disabled hidden>Choose option...</option>
 												<option>1</option>
 												<option>2</option>
 												<option>3</option>
 												<option>4</option>
 												<option>5</option>
 											  </select>
-											  
+
 										  </div>
 									  </div>
 									  <div class="form-group">
 										   <div class="col-xs-12">
 												<br>
 												  <button class="btn btn-lg btn-success" id="btnSave" type="submit"><i class="glyphicon glyphicon-ok-sign"></i> Save</button>
-												   <button class="btn btn-lg" type="reset"><i class="glyphicon glyphicon-repeat"></i> Reset</button>
+												   <button class="btn btn-lg" type="reset"><i class="glyphicon glyphicon-repeat"></i> Reset</button><button class="btn btn-lg" id="addBtn" type="button"><i class=""></i> Add+</button><button class="btn btn-lg" id="delete" type="button"><i class=""></i> Delete</button>
 											</div>
 									  </div>
 								  </form>
-							  
-							  <hr>
-							  
+
+
+
 							 </div><!--/tab-pane-->
 							 <div class="tab-pane" id="messages">
-							   
+
 							   <h2></h2>
-							   
-							   <hr>
-								  <form class="form" action="##" method="post" id="registrationForm">
-									  <div class="form-group">
-										  
-										  <div class="col-xs-6">
-											  <label for="first_name"><h4>First name</h4></label>
-											  <input type="text" class="form-control" name="first_name" id="first_name" placeholder="first name" title="enter your first name if any.">
-										  </div>
-									  </div>
-									  <div class="form-group">
-										  
-										  <div class="col-xs-6">
-											<label for="last_name"><h4>Last name</h4></label>
-											  <input type="text" class="form-control" name="last_name" id="last_name" placeholder="last name" title="enter your last name if any.">
-										  </div>
-									  </div>
-						  
-									  <div class="form-group">
-										  
-										  <div class="col-xs-6">
-											  <label for="phone"><h4>Phone</h4></label>
-											  <input type="text" class="form-control" name="phone" id="phone" placeholder="enter phone" title="enter your phone number if any.">
-										  </div>
-									  </div>
-						  
-									  <div class="form-group">
-										  <div class="col-xs-6">
-											 <label for="mobile"><h4>Mobile</h4></label>
-											  <input type="text" class="form-control" name="mobile" id="mobile" placeholder="enter mobile number" title="enter your mobile number if any.">
-										  </div>
-									  </div>
-									  <div class="form-group">
-										  
-										  <div class="col-xs-6">
-											  <label for="email"><h4>Email</h4></label>
-											  <input type="email" class="form-control" name="email" id="email" placeholder="you@email.com" title="enter your email.">
-										  </div>
-									  </div>
-									  <div class="form-group">
-										  
-										  <div class="col-xs-6">
-											  <label for="email"><h4>Location</h4></label>
-											  <input type="email" class="form-control" id="location" placeholder="somewhere" title="enter a location">
-										  </div>
-									  </div>
-									  <div class="form-group">
-										  
-										  <div class="col-xs-6">
-											  <label for="password"><h4>Password</h4></label>
-											  <input type="password" class="form-control" name="password" id="password" placeholder="password" title="enter your password.">
-										  </div>
-									  </div>
-									  <div class="form-group">
-										  
-										  <div class="col-xs-6">
-											<label for="password2"><h4>Verify</h4></label>
-											  <input type="password" class="form-control" name="password2" id="password2" placeholder="password2" title="enter your password2.">
-										  </div>
-									  </div>
-									  <div class="form-group">
-										   <div class="col-xs-12">
-												<br>
-												  <button class="btn btn-lg btn-success" type="submit"><i class="glyphicon glyphicon-ok-sign"></i> Save</button>
-												   <button class="btn btn-lg" type="reset"><i class="glyphicon glyphicon-repeat"></i> Reset</button>
-											</div>
-									  </div>
-								  </form>
-							   
+
+
+
 							 </div><!--/tab-pane-->
 							 <div class="tab-pane" id="settings">
-									
-								   
+
+
 								  <hr>
-								  <form class="form"  id="registrationForm">
-									  <div class="form-group">
-										  
-										  <div class="col-xs-6">
-											  <label for="first_name"><h4>First name</h4></label>
-											  <input type="text" class="form-control" name="first_name" id="first_name" placeholder="first name" title="enter your first name if any.">
-										  </div>
-									  </div>
-									  <div class="form-group">
-										  
-										  <div class="col-xs-6">
-											<label for="last_name"><h4>Last name</h4></label>
-											  <input type="text" class="form-control" name="last_name" id="last_name" placeholder="last name" title="enter your last name if any.">
-										  </div>
-									  </div>
-						  
-									  <div class="form-group">
-										  
-										  <div class="col-xs-6">
-											  <label for="phone"><h4>Phone</h4></label>
-											  <input type="text" class="form-control" name="phone" id="phone" placeholder="enter phone" title="enter your phone number if any.">
-										  </div>
-									  </div>
-						  
-									  <div class="form-group">
-										  <div class="col-xs-6">
-											 <label for="mobile"><h4>Mobile</h4></label>
-											  <input type="text" class="form-control" name="mobile" id="mobile" placeholder="enter mobile number" title="enter your mobile number if any.">
-										  </div>
-									  </div>
-									  <div class="form-group">
-										  
-										  <div class="col-xs-6">
-											  <label for="email"><h4>Email</h4></label>
-											  <input type="email" class="form-control" name="email" id="email" placeholder="you@email.com" title="enter your email.">
-										  </div>
-									  </div>
-									  <div class="form-group">
-										  
-										  <div class="col-xs-6">
-											  <label for="email"><h4>Location</h4></label>
-											  <input type="email" class="form-control" id="location" placeholder="somewhere" title="enter a location">
-										  </div>
-									  </div>
-									  <div class="form-group">
-										  
-										  <div class="col-xs-6">
-											  <label for="password"><h4>Password</h4></label>
-											  <input type="password" class="form-control" name="password" id="password" placeholder="password" title="enter your password.">
-										  </div>
-									  </div>
-									  <div class="form-group">
-										  
-										  <div class="col-xs-6">
-											<label for="password2"><h4>Verify</h4></label>
-											  <input type="password" class="form-control" name="password2" id="password2" placeholder="password2" title="enter your password2.">
-										  </div>
-									  </div>
-									  <div class="form-group">
-										   <div class="col-xs-12">
-												<br>
-												  <button class="btn btn-lg btn-success pull-right" id="btnSave" ></i> Save</button>
-												   <!--<button class="btn btn-lg" type="reset"><i class="glyphicon glyphicon-repeat"></i> Reset</button>-->
-											</div>
-									  </div>
-								  </form>
+
 							  </div>
 			</div>
 		</div>
