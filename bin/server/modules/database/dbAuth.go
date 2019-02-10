@@ -17,24 +17,20 @@ func (d *Database) UserSignup(req s.RegisterRequest) error {
 	fmt.Println(d.master.acces)
 	db, err := sql.Open("mysql", d.master.acces)
 	if err != nil {
-		panic(err)
 		return errors.New("failed to open database")
 	}
 	defer db.Close()
 	statement, err := db.Prepare("insert into user(username, salt, password, auth, email) values(?,?,?,?,?)")
 	if err != nil {
-		panic(err)
 		return errors.New("failed to prepare statement")
 	}
 	_, err = statement.Exec(req.Username, salt, salted, "user", req.Email)
 	if err != nil {
-		panic(err)
 		return errors.New("error while execution of query")
 	}
 	statement, err = db.Prepare("select iduser from user where username = ?")
 	err = statement.QueryRow(req.Username).Scan(&iduser)
 	if err != nil {
-		panic(err)
 		return errors.New("error while execution of query")
 	}
 	statement, err = db.Prepare("insert into userdetail(userid, name, surname, email, class) values (?,?,?,?,?)")
@@ -42,7 +38,6 @@ func (d *Database) UserSignup(req s.RegisterRequest) error {
 	statement, err = db.Prepare("insert into lastlogin(userid, succes) values (?, 'n')")
 	_, err = statement.Exec(iduser)
 	if err != nil {
-		panic(err)
 		return errors.New("error while execution of query")
 	}
 	return nil

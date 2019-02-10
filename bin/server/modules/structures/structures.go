@@ -57,9 +57,10 @@ type Project struct {
 
 //Card "ID card" contains basic inforamtion about user
 type Card struct {
-	Username    string
-	UserID      int
-	USerPicture string
+	Username string
+	UserID   int
+	Picture  string
+	Email    string
 }
 
 //RegisterRequest req
