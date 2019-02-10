@@ -18,7 +18,7 @@ func (d *Database) UserListAll() ([]s.Card, error) {
 		return out, errors.New("failed to open database")
 	}
 	defer db.Close()
-	statement, err := db.Prepare("select iduser, username, email, profilepicture from user")
+	statement, err := db.Prepare("select iduser, username, email, profilepicture, active from user")
 	if err != nil {
 		return out, errors.New("failed to prepare statement")
 	}
@@ -28,8 +28,13 @@ func (d *Database) UserListAll() ([]s.Card, error) {
 	}
 	for result.Next() {
 		var swap s.Card
-		err = result.Scan(&swap.UserID, &swap.Username, &swap.Email, &swap.Picture)
-		out = append(out, swap)
+		var act string
+		err = result.Scan(&swap.UserID, &swap.Username, &swap.Email, &swap.Picture, &act)
+		if act == "y" {
+			out = append(out, swap)
+		} else {
+			fmt.Println("inactive user")
+		}
 	}
 	fmt.Println(len(out), "users found")
 	return out, nil
@@ -44,7 +49,7 @@ func (d *Database) UserListGroup(groupID int) ([]s.Card, error) {
 		return out, errors.New("failed to open database")
 	}
 	defer db.Close()
-	statement, err := db.Prepare("select iduser, username, email, profilepicture from user inner join groupdetail on user.iduser = groupdetail.userid where idgroupdetail = ?")
+	statement, err := db.Prepare("select iduser, username, email, profilepicture, active from user inner join groupdetail on user.iduser = groupdetail.userid where idgroupdetail = ?")
 	if err != nil {
 		return out, errors.New("failed to prepare statement")
 	}
@@ -54,8 +59,14 @@ func (d *Database) UserListGroup(groupID int) ([]s.Card, error) {
 	}
 	for result.Next() {
 		var swap s.Card
-		err = result.Scan(&swap.UserID, &swap.Username, &swap.Email, &swap.Picture)
-		out = append(out, swap)
+		var act string
+		err = result.Scan(&swap.UserID, &swap.Username, &swap.Email, &swap.Picture, &act)
+		if act == "y" {
+			out = append(out, swap)
+		} else {
+			fmt.Println("inactive user")
+		}
+
 	}
 	fmt.Println(len(out), "users found")
 	return out, nil

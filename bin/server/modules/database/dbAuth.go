@@ -51,11 +51,14 @@ func (d *Database) UserLoginRead(req s.LoginRequest) (s.UserIn, error) {
 		return u, errors.New("failed to open database")
 	}
 	defer db.Close()
-	statement, err := db.Prepare("select iduser, salt, password, auth from user where (username = ? or email = ?)")
+	statement, err := db.Prepare("select iduser, salt, password, auth, profilepicture, active from user where (username = ? or email = ?)")
 	defer statement.Close()
-	err = statement.QueryRow(req.Username, req.Email).Scan(&u.User.UserID, &u.User.Salt, &u.User.Password, &u.User.Authority)
+	err = statement.QueryRow(req.Username, req.Email).Scan(&u.User.UserID, &u.User.Salt, &u.User.Password, &u.User.Authority, &u.User.ProfilePicture, &u.User.Active)
 	if err != nil {
 		return u, errors.New("failed to read row")
+	}
+	if u.User.Active == "n" {
+		return u, errors.New("not active")
 	}
 	accepted := scr.MatchPasswordHash(req.Password, u.User.Salt, u.User.Password)
 	if accepted {
@@ -169,6 +172,14 @@ func (d *Database) userLoginFail(userID int) error {
 	}
 	defer db.Close()
 	statement, err := db.Prepare("insert into loginincident(userid)values(?)")
+	if err != nil {
+		return errors.New("failed to prepare statement")
+	}
+	_, err = statement.Exec(userID)
+	if err != nil {
+		return errors.New("error while execution of query")
+	}
+	statement, err = db.Prepare("update lastlogin set succes = 'n' where userid = ?")
 	if err != nil {
 		return errors.New("failed to prepare statement")
 	}

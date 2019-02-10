@@ -23,6 +23,10 @@ func (c *Core) LoginHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		if err.Error() == "wrong password" {
 			sendSimpleMsg(w, http.StatusUnauthorized, "wrong password")
+			return
+		} else if err.Error() == "not active" {
+			sendSimpleMsg(w, http.StatusUnauthorized, "not activated user")
+			return
 		} else {
 			sendSimpleMsg(w, 500, "internal error")
 			panic(err)

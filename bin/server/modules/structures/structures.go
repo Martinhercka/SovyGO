@@ -28,15 +28,17 @@ type UserIn struct {
 
 //User basic data of user
 type User struct {
-	UserID    int    `json:"iduser,omitempty"`
-	Username  string `json:"username,omitempty"`
-	Name      string `json:"name,omitempty"`
-	Surname   string `json:"surname,omitempty"`
-	Email     string `json:"email,omitempty"`
-	Password  string `json:"password,omitempty"`
-	Class     string `json:"class,omitempty"`
-	Salt      string `json:"salt,omitempty"`
-	Authority string
+	UserID         int    `json:"iduser,omitempty"`
+	Username       string `json:"username,omitempty"`
+	Name           string `json:"name,omitempty"`
+	Surname        string `json:"surname,omitempty"`
+	Email          string `json:"email,omitempty"`
+	Password       string `json:"password,omitempty"`
+	Class          string `json:"class,omitempty"`
+	Salt           string `json:"salt,omitempty"`
+	Authority      string
+	Active         string
+	ProfilePicture string
 }
 
 //Group --
