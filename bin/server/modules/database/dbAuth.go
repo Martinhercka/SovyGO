@@ -20,7 +20,18 @@ func (d *Database) UserSignup(req s.RegisterRequest) error {
 		return errors.New("failed to open database")
 	}
 	defer db.Close()
-	statement, err := db.Prepare("insert into user(username, salt, password, auth, email) values(?,?,?,?,?)")
+	statement, err := db.Prepare("select count(iduser) as iduser from user where username = ?")
+	if err != nil {
+		return errors.New("failed to prepare statement")
+	}
+	err = statement.QueryRow(req.Username).Scan(&iduser)
+	if err != nil {
+		return errors.New("error while execution of query")
+	}
+	if iduser != 0 {
+		return errors.New("user exist")
+	}
+	statement, err = db.Prepare("insert into user(username, salt, password, auth, email) values(?,?,?,?,?)")
 	if err != nil {
 		return errors.New("failed to prepare statement")
 	}

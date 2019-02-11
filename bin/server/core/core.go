@@ -123,5 +123,5 @@ func (c *Core) TestHandler(w http.ResponseWriter, r *http.Request) {
 
 func sendSimpleMsg(w http.ResponseWriter, code int, msg string) {
 	w.WriteHeader(code)
-	fmt.Fprintf(w, msg)
+	w.Write()
 }

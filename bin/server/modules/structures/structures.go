@@ -20,10 +20,10 @@ type LoginResponse struct {
 
 //UserIn internal structure for user representation
 type UserIn struct {
-	User     User
-	Groups   []Group
-	Projects []Project
-	Follow   []Card
+	User     User      `json:"user,omitempty"`
+	Groups   []Group   `json:"groups,omitempty"`
+	Projects []Project `json:"projects,omitempty"`
+	Follow   []Card    `json:"follow,omitempty"`
 }
 
 //User basic data of user
@@ -36,33 +36,33 @@ type User struct {
 	Password       string `json:"password,omitempty"`
 	Class          string `json:"class,omitempty"`
 	Salt           string `json:"salt,omitempty"`
-	Authority      string
-	Active         string
-	ProfilePicture string
+	Authority      string `json:"authority,omitempty"`
+	Active         string `json:"activated,omitempty"`
+	ProfilePicture string `json:"profilepicture,omitempty"`
 }
 
 //Group --
 type Group struct {
-	GroupName string
-	GroupID   int
+	GroupName string `json:"groupname,omitempty"`
+	GroupID   int    `json:"groupid,omitempty"`
 }
 
 //Project basic information about project
 type Project struct {
-	ProjectName string
-	ProjectID   int
-	Role        string
-	Active      string
-	LinkDeploy  string
-	LinkGit     string
+	ProjectName string `json:"projectname,omitempty"`
+	ProjectID   int    `json:"projectid,omitempty"`
+	Role        string `json:"role,omitempty"`
+	Active      string `json:"active,omitempty"`
+	LinkDeploy  string `json:"linkdeploy,omitempty"`
+	LinkGit     string `json:"linkgit,omitempty"`
 }
 
 //Card "ID card" contains basic inforamtion about user
 type Card struct {
-	Username string
-	UserID   int
-	Picture  string
-	Email    string
+	Username string `json:"username,omitempty"`
+	UserID   int    `json:"userid,omitempty"`
+	Picture  string `json:"picture,omitempty"`
+	Email    string `json:"email,omitempty"`
 }
 
 //RegisterRequest req

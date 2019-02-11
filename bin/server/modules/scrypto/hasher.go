@@ -70,6 +70,18 @@ func newSalt() string {
 	return out
 }
 
+//NewToken generate random string used as token
+func NewToken() string {
+	s := rnd.NewSource(time.Now().Unix())
+	r := rnd.New(s)
+	//tm := time.Now()
+	var out string //= strconv.Itoa(tm.Hour) + strconv.Itoa(tm.Minute) + strconv.Itoa(tm.Second) + "/"
+	for i := 0; i < 22; i++ {
+		out += characters[r.Intn(len(characters))]
+	}
+	return out
+}
+
 //EncryptAES provide simple AES Encryption
 func EncryptAES(key, text []byte) ([]byte, error) {
 	block, err := aes.NewCipher(key)

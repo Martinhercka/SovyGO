@@ -42,7 +42,12 @@ func (c *Core) RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	var reg str.RegisterRequest
 	var err error
 	err = json.NewDecoder(r.Body).Decode(&reg)
+
 	if err != nil {
+		if err.Error() == "user exist" {
+			sendSimpleMsg(w, 400, "user already exist")
+			return
+		}
 		sendSimpleMsg(w, 300, "Wrong request")
 		panic(err)
 	}
