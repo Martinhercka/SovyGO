@@ -11,10 +11,7 @@ import (
 
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
-	"github.com/gorilla/websocket"
 )
-
-var upgrader = websocket.Upgrader{}
 
 //Server structure that hold all parts of application
 type Server struct {

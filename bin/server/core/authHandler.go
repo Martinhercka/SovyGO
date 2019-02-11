@@ -16,24 +16,29 @@ func (c *Core) LoginHandler(w http.ResponseWriter, r *http.Request) {
 	var user str.UserIn
 	err = json.NewDecoder(r.Body).Decode(&req)
 	if err != nil {
-		sendSimpleMsg(w, 300, "Wrong request")
-		panic(err)
+		w.WriteHeader(300)
+		fmt.Fprintf(w, "wrong request")
+		return
 	}
 	user, err = c.DB.UserLoginRead(req)
 	if err != nil {
 		if err.Error() == "wrong password" {
-			sendSimpleMsg(w, http.StatusUnauthorized, "wrong password")
+			w.WriteHeader(http.StatusUnauthorized)
+			fmt.Fprintf(w, "wrong password")
 			return
 		} else if err.Error() == "not active" {
-			sendSimpleMsg(w, http.StatusUnauthorized, "not activated user")
+			w.WriteHeader(http.StatusUnauthorized)
+			fmt.Fprintf(w, "not activated user")
 			return
 		} else {
-			sendSimpleMsg(w, 500, "internal error")
+			w.WriteHeader(500)
+			fmt.Fprintf(w, "internal error")
 			panic(err)
 		}
 	}
+	w.WriteHeader(http.StatusOK)
+	fmt.Fprintf(w, "status OK")
 	fmt.Println(user.User.Email)
-	sendSimpleMsg(w, http.StatusAccepted, "status OK")
 }
 
 //RegisterHandler serve main htm page
@@ -45,22 +50,41 @@ func (c *Core) RegisterHandler(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		if err.Error() == "user exist" {
-			sendSimpleMsg(w, 400, "user already exist")
+			w.WriteHeader(400)
+			fmt.Fprintf(w, "user already exist")
 			return
 		}
-		sendSimpleMsg(w, 300, "Wrong request")
+		w.WriteHeader(400)
+		fmt.Fprintf(w, "Wrong request")
 		panic(err)
 	}
 	var email string
 	email = reg.Email
 	err = c.DB.UserSignup(reg)
 	if err != nil {
-		sendSimpleMsg(w, 500, "internal error")
+		w.WriteHeader(500)
+		fmt.Fprintf(w, "Internal error")
 		panic(err)
 	}
+	w.WriteHeader(http.StatusCreated)
+	fmt.Fprintf(w, "Created")
 	m.Activationmail(email)
-	sendSimpleMsg(w, http.StatusCreated, "created")
 	//Test print
 	//c.Templates["register"].Execute(w, nil)
+
+}
+
+//PasswordResetRequire -
+func (c *Core) PasswordResetRequire(w http.ResponseWriter, r *http.Request) {
+
+}
+
+//PasswordReset -
+func (c *Core) PasswordReset(w http.ResponseWriter, r *http.Request) {
+
+}
+
+//PasswordChange -
+func (c *Core) PasswordChange(w http.ResponseWriter, r *http.Request) {
 
 }
