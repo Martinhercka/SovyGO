@@ -1,10 +1,12 @@
 package database
 
 import (
+	"crypto/rand"
 	"database/sql"
 	"errors"
 	"fmt"
 
+	mail "github.com/Martinhercka/SovyGo/bin/server/modules/mailer"
 	scr "github.com/Martinhercka/SovyGo/bin/server/modules/scrypto"
 	s "github.com/Martinhercka/SovyGo/bin/server/modules/structures"
 	_ "github.com/go-sql-driver/mysql" //needed
@@ -22,6 +24,7 @@ func (d *Database) UserSignup(req s.RegisterRequest) error {
 	defer db.Close()
 	statement, err := db.Prepare("select count(iduser) as iduser from user where username = ?")
 	if err != nil {
+		panic(err)
 		return errors.New("failed to prepare statement")
 	}
 	err = statement.QueryRow(req.Username).Scan(&iduser)
@@ -33,6 +36,7 @@ func (d *Database) UserSignup(req s.RegisterRequest) error {
 	}
 	statement, err = db.Prepare("insert into user(username, salt, password, auth, email) values(?,?,?,?,?)")
 	if err != nil {
+		panic(err)
 		return errors.New("failed to prepare statement")
 	}
 	_, err = statement.Exec(req.Username, salt, salted, "user", req.Email)
@@ -196,6 +200,39 @@ func (d *Database) userLoginFail(userID int) error {
 		return errors.New("failed to prepare statement")
 	}
 	_, err = statement.Exec(userID)
+	if err != nil {
+		return errors.New("error while execution of query")
+	}
+	return nil
+}
+
+func (d *Database) UserActivation(req s.RegisterRequest) error {
+	db, err := sql.Open("mysql", d.master.acces)
+	var usrid int
+	if err != nil {
+		return errors.New("failed to open database")
+	}
+
+	defer db.Close()
+	statement, err := db.Prepare("select iduser from user where username = ?")
+	if err != nil {
+		return errors.New("failed to prepare statement")
+	}
+	err = statement.QueryRow(req.Username).Scan(&usrid)
+
+	statement, err = db.Prepare("insert into activationtoken(userid,activationtoken)values(?,?)")
+	if err != nil {
+		return errors.New("failed to prepare statement")
+	}
+
+	b := make([]byte, 8)
+
+	rand.Read(b)
+
+	tokenn := fmt.Sprintf("%x", b)
+
+	_, err = statement.Exec(usrid, tokenn)
+	mail.Activationmail(req.Email, tokenn)
 	if err != nil {
 		return errors.New("error while execution of query")
 	}
