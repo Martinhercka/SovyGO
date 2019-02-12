@@ -27,8 +27,21 @@ func (c *Core) LoginHandler(w http.ResponseWriter, r *http.Request) {
 			fmt.Fprintf(w, "wrong password")
 			return
 		} else if err.Error() == "not active" {
-			w.WriteHeader(http.StatusUnauthorized)
-			fmt.Fprintf(w, "not activated user")
+			//w.WriteHeader(http.StatusUnauthorized)
+			//fmt.Fprintf(w, "not activated user")
+			//return
+		} else {
+			w.WriteHeader(500)
+			fmt.Fprintf(w, "internal error")
+			panic(err)
+		}
+	}
+	auth := str.Auth{Username: user.User.Username, UserID: user.User.UserID, SessionID: req.SessionID}
+	auth, err = c.p.CreateSession(auth)
+	if err != nil {
+		if err.Error() == "session exist" {
+			w.WriteHeader(400)
+			fmt.Fprintf(w, "session exist")
 			return
 		} else {
 			w.WriteHeader(500)
@@ -36,8 +49,9 @@ func (c *Core) LoginHandler(w http.ResponseWriter, r *http.Request) {
 			panic(err)
 		}
 	}
+	out, err := json.Marshal(auth)
 	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, "status OK")
+	fmt.Fprintf(w, string(out))
 	fmt.Println(user.User.Email)
 }
 

@@ -6,35 +6,33 @@ import (
 	"time"
 
 	scr "github.com/Martinhercka/SovyGo/bin/server/modules/scrypto"
+	str "github.com/Martinhercka/SovyGo/bin/server/modules/structures"
 )
 
 //Persist --
 type Persist struct {
-	sesions []Auth
+	sesions []str.Auth
 	changed time.Time
 }
 
-//Auth standard authentication request
-type Auth struct {
-	SessionID string `json:"sessionid,omitempty"`
-	Username  string `json:"username,omitempty"`
-	UserID    int    `json:"iduser,omitempty"`
-	Token     string `json:"token,omitempty"`
-	Remember  bool   `json:"remember,omitempty"`
+//NewPv2 create new object of persistance
+func NewPv2() Persist {
+	out := Persist{}
+	return out
 }
 
 //CreateSession --
-func (s *Persist) CreateSession(a Auth) (Auth, error) {
-	if !s.findSession(a.SessionID) {
+func (s *Persist) CreateSession(a str.Auth) (str.Auth, error) {
+	if !s.findSession(a.SessionID, a.UserID) {
 		a.Token = scr.NewToken()
 		s.sesions = append(s.sesions, a)
 	}
-	return a, errors.New("")
+	return a, errors.New("session exist")
 }
 
-func (s *Persist) findSession(sessionid string) bool {
+func (s *Persist) findSession(sessionid string, userid int) bool {
 	for _, element := range s.sesions {
-		if element.SessionID == sessionid && element.Token != "" {
+		if element.SessionID == sessionid && (element.Token != "" || element.UserID != userid) {
 			return true
 		}
 	}
@@ -42,7 +40,7 @@ func (s *Persist) findSession(sessionid string) bool {
 }
 
 //AuthenticateSession --
-func (s *Persist) AuthenticateSession(a Auth) bool {
+func (s *Persist) AuthenticateSession(a str.Auth) bool {
 	for _, element := range s.sesions {
 		if element.SessionID == a.SessionID {
 			if element.Token == a.Token && element.UserID == a.UserID && element.Username == a.Username {
@@ -59,7 +57,7 @@ func (s *Persist) collectGarbage() {
 	now = now.Add(-(5 * time.Minute))
 	if s.changed.Before(now) {
 		fmt.Println("G")
-		var out []Auth
+		var out []str.Auth
 		for _, element := range s.sesions {
 			if element.Token != "" || element.Remember {
 				out = append(out, element)

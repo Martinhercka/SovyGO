@@ -9,13 +9,14 @@ import (
 	auth "github.com/Martinhercka/SovyGo/bin/server/modules/authentication"
 	conf "github.com/Martinhercka/SovyGo/bin/server/modules/configuration"
 	dtb "github.com/Martinhercka/SovyGo/bin/server/modules/database"
+	prs "github.com/Martinhercka/SovyGo/bin/server/modules/persistance"
 	str "github.com/Martinhercka/SovyGo/bin/server/modules/structures"
 )
 
 //Core --
 type Core struct {
 	Config    conf.Config
-	clients   []session
+	p         prs.Persist
 	Templates map[string]*template.Template
 	DB        dtb.Database
 }
@@ -31,6 +32,7 @@ type session struct {
 func NewCore() (Core, error) {
 	var core Core
 	var err error
+	core.p = prs.NewPv2()
 	core.Config, err = conf.ReadConfig()
 	if err != nil {
 		fmt.Println("error read config")
@@ -54,7 +56,6 @@ func NewCore() (Core, error) {
 	fmt.Println("Result of test database: ", core.DB.TestConnection())
 
 	return core, nil
-
 }
 
 func (c *Core) loadTemplates() error {

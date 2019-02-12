@@ -4,6 +4,15 @@ import (
 	"encoding/json"
 )
 
+//Auth standard authentication request
+type Auth struct {
+	SessionID string `json:"sessionid,omitempty"`
+	Username  string `json:"username,omitempty"`
+	UserID    int    `json:"iduser,omitempty"`
+	Token     string `json:"token,omitempty"`
+	Remember  bool   `json:"remember,omitempty"`
+}
+
 //LoginRequest req
 type LoginRequest struct {
 	SessionID string `json:"sessionid,omitempty"`
