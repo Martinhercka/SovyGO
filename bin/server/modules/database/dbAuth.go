@@ -64,7 +64,8 @@ func (d *Database) UserLoginRead(req s.LoginRequest) (s.UserIn, error) {
 	defer db.Close()
 	statement, err := db.Prepare("select iduser, salt, password, auth, profilepicture, active from user where (username = ? or email = ?)")
 	defer statement.Close()
-	err = statement.QueryRow(req.Username, req.Email).Scan(&u.User.UserID, &u.User.Salt, &u.User.Password, &u.User.Authority, &u.User.ProfilePicture, &u.User.Active)
+	row := statement.QueryRow(req.Username, req.Email)
+	row.Scan(&u.User.UserID, &u.User.Salt, &u.User.Password, &u.User.Authority, &u.User.ProfilePicture, &u.User.Active)
 	if err != nil {
 		return u, errors.New("failed to read row")
 	}

@@ -18,3 +18,8 @@ func (c *Core) UserListAll(w http.ResponseWriter, r *http.Request) {
 	}
 	sendSimpleMsg(w, 200, string(out))
 }
+
+//UserListGroup -
+func (c *Core) UserListGroup(w http.ResponseWriter, r *http.Request) {
+
+}
