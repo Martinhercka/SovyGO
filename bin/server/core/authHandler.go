@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"net/http"
 
-	m "github.com/Martinhercka/SovyGo/bin/server/modules/mailer"
 	str "github.com/Martinhercka/SovyGo/bin/server/modules/structures"
 )
 
@@ -64,27 +63,29 @@ func (c *Core) RegisterHandler(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		if err.Error() == "user exist" {
-			w.WriteHeader(400)
-			fmt.Fprintf(w, "user already exist")
+			sendSimpleMsg(w, 400, "user already exist")
 			return
 		}
-		w.WriteHeader(400)
-		fmt.Fprintf(w, "Wrong request")
+		sendSimpleMsg(w, 300, "Wrong request")
 		panic(err)
 	}
-	var email string
-	email = reg.Email
+
 	err = c.DB.UserSignup(reg)
 	if err != nil {
-		w.WriteHeader(500)
-		fmt.Fprintf(w, "Internal error")
+		sendSimpleMsg(w, 500, "internal error")
 		panic(err)
 	}
-	w.WriteHeader(http.StatusCreated)
-	fmt.Fprintf(w, "Created")
-	m.Activationmail(email)
+
+	c.DB.UserActivation(reg)
+
+	sendSimpleMsg(w, http.StatusCreated, "created")
 	//Test print
 	//c.Templates["register"].Execute(w, nil)
+
+}
+
+func (c *Core) ActivationHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
 
 }
 

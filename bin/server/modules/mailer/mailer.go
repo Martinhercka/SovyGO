@@ -9,7 +9,6 @@ func Activationmail(email string, tokenn string) {
 	m := gomail.NewMessage()
 	m.SetHeader("From", "martinhercka1@gmail.com")
 	m.SetHeader("To", email)
-
 	m.SetHeader("Subject", "Hello")
 	m.SetBody("text/html", "localhost:8080/activate/"+tokenn)
 

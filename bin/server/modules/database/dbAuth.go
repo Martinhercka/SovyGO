@@ -206,6 +206,8 @@ func (d *Database) userLoginFail(userID int) error {
 	return nil
 }
 
+var tokenn string
+
 func (d *Database) UserActivation(req s.RegisterRequest) error {
 	db, err := sql.Open("mysql", d.master.acces)
 	var usrid int
@@ -228,11 +230,10 @@ func (d *Database) UserActivation(req s.RegisterRequest) error {
 	b := make([]byte, 8)
 
 	rand.Read(b)
-
-	tokenn := fmt.Sprintf("%x", b)
-
-	_, err = statement.Exec(usrid, tokenn)
-	mail.Activationmail(req.Email, tokenn)
+	req.ActivationToken = fmt.Sprintf("%x", b)
+	tokenn = req.ActivationToken
+	_, err = statement.Exec(usrid, req.ActivationToken)
+	mail.Activationmail(req.Email, req.ActivationToken)
 	if err != nil {
 		return errors.New("error while execution of query")
 	}
