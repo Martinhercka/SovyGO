@@ -76,12 +76,13 @@ type Card struct {
 
 //RegisterRequest req
 type RegisterRequest struct {
-	Username string `json:"username,omitempty"`
-	Name     string `json:"name,omitempty"`
-	Surname  string `json:"surname,omitempty"`
-	Email    string `json:"email,omitempty"`
-	Password string `json:"password,omitempty"`
-	Class    string `json:"class,omitempty"`
+	Username        string `json:"username,omitempty"`
+	Name            string `json:"name,omitempty"`
+	Surname         string `json:"surname,omitempty"`
+	Email           string `json:"email,omitempty"`
+	Password        string `json:"password,omitempty"`
+	Class           string `json:"class,omitempty"`
+	ActivationToken string `json:"activationtoken,omitempty"`
 }
 
 //SessionRequest req
