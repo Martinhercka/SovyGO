@@ -42,11 +42,11 @@ func (c *Core) LoginHandler(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(400)
 			fmt.Fprintf(w, "session exist")
 			return
-		} else {
-			w.WriteHeader(500)
-			fmt.Fprintf(w, "internal error")
-			panic(err)
 		}
+		w.WriteHeader(500)
+		fmt.Fprintf(w, "internal error")
+		panic(err)
+
 	}
 	out, err := json.Marshal(auth)
 	w.WriteHeader(http.StatusOK)
@@ -76,7 +76,7 @@ func (c *Core) RegisterHandler(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 
-	c.DB.UserActivation(reg)
+	c.DB.UserActivation(reg, c.mail)
 
 	sendSimpleMsg(w, http.StatusCreated, "created")
 	//Test print
@@ -84,9 +84,16 @@ func (c *Core) RegisterHandler(w http.ResponseWriter, r *http.Request) {
 
 }
 
+//ActivationHandler --
 func (c *Core) ActivationHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-
+	token, ok := r.URL.Query()["token"]
+	if !ok || len(token[0]) < 1 {
+		w.WriteHeader(http.StatusNotAcceptable)
+		fmt.Fprintf(w, "no token")
+		return
+	}
+	fmt.Println(token[0])
 }
 
 //PasswordResetRequire -

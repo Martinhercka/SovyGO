@@ -12,6 +12,12 @@ type Config struct {
 	Server   server   `json:"server,omitempty"`
 	Database database `json:"database,omitempty"`
 	Log      log      `json:"log,omitempty"`
+	Mailer   mail     `json:"mailer,omitempty"`
+}
+
+type mail struct {
+	Username string `json:"username,omitempty"`
+	Password string `json:"password,omitempty"`
 }
 
 //loadConfig load configuration file and return new config structure

@@ -4,6 +4,14 @@ import (
 	"encoding/json"
 )
 
+//Mail --
+type Mail struct {
+	Username string `json:"username,omitempty"`
+	Password string `json:"password,omitempty"`
+	Host     string `json:"host,omitempty"`
+	Port     string `json:"port,omitempty"`
+}
+
 //Auth standard authentication request
 type Auth struct {
 	SessionID string `json:"sessionid,omitempty"`

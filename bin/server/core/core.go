@@ -19,6 +19,7 @@ type Core struct {
 	p         prs.Persist
 	Templates map[string]*template.Template
 	DB        dtb.Database
+	mail      str.Mail
 }
 
 type session struct {
@@ -38,6 +39,7 @@ func NewCore() (Core, error) {
 		fmt.Println("error read config")
 		panic(err)
 	}
+	core.mail = str.Mail{Username: core.Config.Mailer.Username, Password: core.Config.Mailer.Password, Host: core.Config.Server.Host, Port: core.Config.Server.Port}
 	core.DB, err = dtb.NewDatabase()
 	if err != nil {
 		fmt.Println("error in creating of database structure")

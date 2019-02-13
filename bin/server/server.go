@@ -41,8 +41,7 @@ func (s *Server) StartServer() error {
 		http.ServeFile(w, r, "web_files/test.html")
 	})
 	s.r.HandleFunc("/home", s.core.HomeHandler).Methods("GET")
-	s.r.HandleFunc("/activate/{tokenn}", s.core.ActivationHandler.Methods("GET")
-
+	s.r.HandleFunc("/auth/activate", s.core.ActivationHandler).Methods("GET")
 	s.r.HandleFunc("/register", s.core.RegisterPageHandler).Methods("GET")
 	s.r.HandleFunc("/login", s.core.LoginPageHandler).Methods("GET")
 	s.r.HandleFunc("/test", s.core.TestHandler).Methods("GET")

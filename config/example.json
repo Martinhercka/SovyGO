@@ -4,6 +4,10 @@
         "port": ":8010",
 	"host" : ""
     },
+    "mailer" : {
+        "username" : "",
+        "password" : ""
+    },
     "database" : {
         "master" : {
             "active" : false,
