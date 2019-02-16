@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-
+	dtb "github.com/Martinhercka/SovyGo/bin/server/modules/database"
 	str "github.com/Martinhercka/SovyGo/bin/server/modules/structures"
 )
 
@@ -94,6 +94,7 @@ func (c *Core) ActivationHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	fmt.Println(token[0])
+	dtb
 }
 
 //PasswordResetRequire -
