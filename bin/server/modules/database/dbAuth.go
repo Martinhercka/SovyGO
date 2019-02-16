@@ -236,17 +236,23 @@ func (d *Database) UserActivation(req s.RegisterRequest, mailer s.Mail) (s.Regis
 	return req, nil
 }
 
-func (d *Database) SetUserActive(tkn []string) {
+func (d *Database) SetUserActive(tkn string) error {
 	db, err := sql.Open("mysql", d.master.acces)
-	statement, err := db.Prepare("select userid from activationtoken where token = ?")
 	if err != nil {
-
+		return errors.New("failed to open database")
 	}
+	defer db.Close()
+	statement, err := db.Prepare("select userid from activationtoken where activationtoken = ?")
+	if err != nil {
+		fmt.Println(err)
+		return errors.New("failed to prepare statementasdasd")
+	}
+
 	var usrid int
 	err = statement.QueryRow(tkn).Scan(&usrid)
 	fmt.Println(usrid)
 	statement, err = db.Prepare("update user set active = 'y' where iduser = ?")
 	fmt.Println(tkn)
 	_, err = statement.Exec(usrid)
-	return
+	return err
 }

@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	dtb "github.com/Martinhercka/SovyGo/bin/server/modules/database"
+
 	str "github.com/Martinhercka/SovyGo/bin/server/modules/structures"
 )
 
@@ -93,8 +93,14 @@ func (c *Core) ActivationHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "no token")
 		return
 	}
-	fmt.Println(token[0])
-	dtb
+	var err error
+	var tkn string
+	tkn = token[0]
+	err = c.DB.SetUserActive(tkn)
+	if err != nil {
+
+		panic(err)
+	}
 }
 
 //PasswordResetRequire -
