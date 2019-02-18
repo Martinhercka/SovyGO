@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded',function(){
-
+var sessionID;
 
 var username,email,password,confirmpass;
 
@@ -66,11 +66,22 @@ else {
   });
 
 
+$("#loginBtn").click(function(){
+  if(sessionID ==""||sessionID=="null"){
+  localStorage.setItem("sessionID",generateSesssionId())
+  console.log(sessionID)
+}
+else {
+  sessionID = localStorage.getItem("sessionID");
+  console.log(sessionID)
+}
 
 
 
 
 
+
+  });
 
 
 
@@ -87,3 +98,14 @@ else {
 
 
 }(document, window, 0));
+
+
+  function generateSesssionId() {
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for (var i = 0; i < 16; i++)
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
+  }
