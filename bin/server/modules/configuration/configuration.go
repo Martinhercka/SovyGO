@@ -26,9 +26,10 @@ func loadConfig() {
 }
 
 type server struct {
-	Folder string `json:"folder,omitempty"`
-	Port   string `json:"port,omitempty"`
-	Host   string `json:"host,omitempty"`
+	Folder      string `json:"folder,omitempty"`
+	Port        string `json:"port,omitempty"`
+	Host        string `json:"host,omitempty"`
+	ShutdownKey string `json:"shutdownkey,omitempty"`
 }
 
 type database struct {

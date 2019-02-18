@@ -98,7 +98,6 @@ func (c *Core) ActivationHandler(w http.ResponseWriter, r *http.Request) {
 	tkn = token[0]
 	err = c.DB.SetUserActive(tkn)
 	if err != nil {
-
 		panic(err)
 	}
 }

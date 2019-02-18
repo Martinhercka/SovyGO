@@ -40,11 +40,17 @@ func (s *Server) StartServer() error {
 	s.r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "web_files/test.html")
 	})
+	s.r.NotFoundHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "text/html; charset=utf-8")
+		w.WriteHeader(http.StatusNotFound)
+		http.ServeFile(w, r, "web_files/notFound.html")
+	})
 	s.r.HandleFunc("/home", s.core.HomeHandler).Methods("GET")
-	s.r.HandleFunc("/auth/activate", s.core.ActivationHandler).Methods("GET")
 	s.r.HandleFunc("/register", s.core.RegisterPageHandler).Methods("GET")
 	s.r.HandleFunc("/login", s.core.LoginPageHandler).Methods("GET")
 	s.r.HandleFunc("/test", s.core.TestHandler).Methods("GET")
+	s.r.HandleFunc("user/listall", s.core.UserListAll).Methods("POST")
+
 	s.r.HandleFunc("/auth/register", s.core.RegisterHandler).Methods("POST")
 	s.r.HandleFunc("/auth/login", s.core.LoginHandler).Methods("POST")
 	s.r.HandleFunc("/key/new/", func(w http.ResponseWriter, r *http.Request) {
@@ -54,9 +60,21 @@ func (s *Server) StartServer() error {
 		core.ImportAESKey(w, r, &s.state)
 	})
 	s.r.HandleFunc("/off/1234", func(w http.ResponseWriter, r *http.Request) {
-		w.WriteHeader(http.StatusOK)
-		w.Write([]byte("shutdown"))
-		s.degradation <- 0
+		w.Header().Set("Content-Type", "text/plain")
+		token, ok := r.URL.Query()["token"]
+		if !ok || len(token[0]) < 1 {
+			w.WriteHeader(http.StatusNotAcceptable)
+			fmt.Fprintf(w, "no token")
+			return
+		}
+		if token[0] == s.core.Config.Server.ShutdownKey {
+			w.WriteHeader(http.StatusOK)
+			w.Write([]byte("shutdown"))
+			s.degradation <- 0
+			return
+		}
+		w.WriteHeader(http.StatusForbidden)
+		w.Write([]byte("wrong key"))
 	})
 	s.r.HandleFunc("/hello", notImplemented)
 	http.Handle("/", s.r)
