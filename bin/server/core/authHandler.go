@@ -115,6 +115,24 @@ func (c *Core) PasswordReset(w http.ResponseWriter, r *http.Request) {
 
 //PasswordChange -
 func (c *Core) PasswordChange(w http.ResponseWriter, r *http.Request) {
+	var req str.PasswordChange
+	var err error
+	err = json.NewDecoder(r.Body).Decode(&req)
+	if err != nil {
+		w.WriteHeader(300)
+		fmt.Fprintf(w, "wrong request")
+		return
+	}
+	if c.p.AuthenticateSession(req.Auth) {
+		err = c.DB.UserChangePassword(req.Auth.UserID, req.NewPass, req.OldPass)
+		if err == nil {
+			w.WriteHeader(http.StatusOK)
+			fmt.Fprintf(w, "{'status' : 'succes'}")
+			return
+		}
+	}
+	w.WriteHeader(300)
+	fmt.Fprintf(w, "wrong request")
 
 }
 

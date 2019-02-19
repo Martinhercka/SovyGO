@@ -4,6 +4,13 @@ import (
 	"encoding/json"
 )
 
+//PasswordChange --
+type PasswordChange struct {
+	Auth    Auth   `json:"auth,omitempty"`
+	OldPass string `json:"oldpass,omitempty"`
+	NewPass string `json:"newpass,omitempty"`
+}
+
 //Mail --
 type Mail struct {
 	Username string `json:"username,omitempty"`

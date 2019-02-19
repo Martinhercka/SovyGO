@@ -49,11 +49,12 @@ func (s *Server) StartServer() error {
 	s.r.HandleFunc("/register", s.core.RegisterPageHandler).Methods("GET")
 	s.r.HandleFunc("/login", s.core.LoginPageHandler).Methods("GET")
 	s.r.HandleFunc("/test", s.core.TestHandler).Methods("GET")
-	s.r.HandleFunc("user/listall", s.core.UserListAll).Methods("POST")
+	s.r.HandleFunc("/user/listall", s.core.UserListAll).Methods("POST")
 
 	s.r.HandleFunc("/auth/register", s.core.RegisterHandler).Methods("POST")
 	s.r.HandleFunc("/auth/login", s.core.LoginHandler).Methods("POST")
 	s.r.HandleFunc("/auth/logout", s.core.LogoutHnadler).Methods("POST")
+	s.r.HandleFunc("/auth/chpasswd", s.core.PasswordChange).Methods("POST")
 	s.r.HandleFunc("/key/new/", func(w http.ResponseWriter, r *http.Request) {
 		core.NewKey(w, r, &s.state)
 	})

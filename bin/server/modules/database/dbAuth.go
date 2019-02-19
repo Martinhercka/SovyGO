@@ -84,14 +84,23 @@ func (d *Database) UserLoginRead(req s.LoginRequest) (s.UserIn, error) {
 }
 
 //UserChangePassword provide write succes record of login
-func (d *Database) UserChangePassword(userID int, newPass string) error {
-	salted, salt := scr.NewPasswordHash(newPass)
+func (d *Database) UserChangePassword(userID int, newPass string, oldpass string) error {
+	var salt, salted, passw string
 	db, err := sql.Open("mysql", d.master.acces)
 	if err != nil {
 		return errors.New("failed to open database")
 	}
 	defer db.Close()
-	statement, err := db.Prepare("update user set password = ?, salt = ? where iduser = ?")
+	statement, err := db.Prepare("select salt, password from user where iduser = ?")
+	defer statement.Close()
+	row := statement.QueryRow(userID)
+	row.Scan(&salt, &passw)
+	accept := scr.MatchPasswordHash(oldpass, salt, passw)
+	if !accept {
+		return errors.New("wrong password")
+	}
+	salted, salt = scr.NewPasswordHash(newPass)
+	statement, err = db.Prepare("update user set password = ?, salt = ? where iduser = ?")
 	if err != nil {
 		return errors.New("failed to prepare statement")
 	}
