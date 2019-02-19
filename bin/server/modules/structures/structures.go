@@ -11,6 +11,27 @@ type PasswordChange struct {
 	NewPass string `json:"newpass,omitempty"`
 }
 
+//CreateDB --
+type CreateDB struct {
+	Auth   Auth   `json:"auth,omitempty"`
+	DBname string `json:"dbname,omitempty"`
+}
+
+//CreateDBUser --
+type CreateDBUser struct {
+	Auth     Auth   `json:"auth,omitempty"`
+	UserName string `json:"username,omitempty"`
+	Password string `json:"password,omitempty"`
+}
+
+//AsignDBUser --
+type AsignDBUser struct {
+	Auth       Auth   `json:"auth,omitempty"`
+	UserName   string `json:"username,omitempty"`
+	DBname     string `json:"dbname,omitempty"`
+	Privileges string `json:"privileges,omitempty"`
+}
+
 //Mail --
 type Mail struct {
 	Username string `json:"username,omitempty"`

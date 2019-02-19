@@ -30,11 +30,12 @@ func (d *Database) UserListAll() ([]s.Card, error) {
 		var swap s.Card
 		var act string
 		err = result.Scan(&swap.UserID, &swap.Username, &swap.Email, &swap.Picture, &act)
-		if act == "y" {
-			out = append(out, swap)
-		} else {
-			fmt.Println("inactive user")
-		}
+		//if act == "y" {
+		//	out = append(out, swap)
+		//} else {
+		//	fmt.Println("inactive user")
+		//}
+		out = append(out, swap)
 	}
 	fmt.Println(len(out), "users found")
 	return out, nil
