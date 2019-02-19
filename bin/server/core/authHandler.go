@@ -26,9 +26,9 @@ func (c *Core) LoginHandler(w http.ResponseWriter, r *http.Request) {
 			fmt.Fprintf(w, "wrong password")
 			return
 		} else if err.Error() == "not active" {
-			//w.WriteHeader(http.StatusUnauthorized)
-			//fmt.Fprintf(w, "not activated user")
-			//return
+			w.WriteHeader(http.StatusUnauthorized)
+			fmt.Fprintf(w, "not activated user")
+			return
 		} else {
 			w.WriteHeader(500)
 			fmt.Fprintf(w, "internal error")

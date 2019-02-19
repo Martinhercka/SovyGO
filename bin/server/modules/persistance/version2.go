@@ -26,6 +26,7 @@ func (s *Persist) CreateSession(a str.Auth) (str.Auth, error) {
 	if !s.findSession(a.SessionID, a.UserID) {
 		a.Token = scr.NewToken()
 		s.sesions = append(s.sesions, a)
+		return a, nil
 	}
 	return a, errors.New("session exist")
 }

@@ -56,22 +56,15 @@
 							   
 						  <div class="panel panel-default">
 							<div class="panel-heading">Website <i class="fa fa-link fa-1x"></i></div>
-							<div class="panel-body"><a href="http://bootnipets.com">bootnipets.com</a></div>
+							<div class="panel-body"><a href={{.User.personalPage}}>My personal website</a></div>
 						  </div>
 						  
 						  
 						  <ul class="list-group">
 							<li class="list-group-item text-muted">Activity <i class="fa fa-dashboard fa-1x"></i></li>
-							<li class="list-group-item text-right"><span class="pull-left"><strong>Shares</strong></span> 125</li>
-							<li class="list-group-item text-right"><span class="pull-left"><strong>Followers</strong></span> 78</li>
+							<li class="list-group-item text-right"><span class="pull-left"><strong>Projects</strong></span> {{.User.projects}} </li>
+							<li class="list-group-item text-right"><span class="pull-left"><strong>Following</strong></span> {{.User.following}} </li>
 						  </ul> 
-							   
-						  <div class="panel panel-default">
-							<div class="panel-heading">Social Media</div>
-							<div class="panel-body">
-								<i class="fa fa-facebook fa-2x"></i> <i class="fa fa-github fa-2x"></i> <i class="fa fa-twitter fa-2x"></i> <i class="fa fa-pinterest fa-2x"></i> <i class="fa fa-google-plus fa-2x"></i>
-							</div>
-						  </div>
 						  
 						</div><!--/col-3-->
 						<div class="col-sm-9">
@@ -89,23 +82,23 @@
 									  <div class="form-group">
 										  
 										  <div class="col-xs-6">
-											  <label for="first_name"><h4>First name</h4></label>
-											  <input type="text" class="form-control" name="first_name" id="first_name" placeholder="first name" title="enter your first name if any.">
+											  <label for="first_name"><h4>First name: </h4></label>
+											  <input type="text" class="form-control" name="first_name" id="first_name" value={{.User.firstName}} placeholder="first name" title="enter your first name if any.">
 										  </div>
 									  </div>
 									  <div class="form-group">
 										  
 										  <div class="col-xs-6">
-											<label for="last_name"><h4>Last name</h4></label>
-											  <input type="text" class="form-control" name="last_name" id="last_name" placeholder="last name" title="enter your last name if any.">
+											<label for="last_name"><h4>Last name:</h4></label>
+											  <input type="text" class="form-control" name="last_name" id="last_name" value={{.User.lastName}} placeholder="last name" title="enter your last name if any.">
 										  </div>
 									  </div>
 						  
 									  <div class="form-group">
 										  
 										  <div class="col-xs-6">
-											  <label for="phone"><h4>Class</h4></label>
-											  <input type="text" class="form-control" name="phone" id="phone" placeholder="enter your class" title="enter your phone number if any.">
+											  <label for="class"><h4>Class</h4></label>
+											  <input type="text" class="form-control" name="class" id="class" placeholder="enter your class" title="enter your class number if any.">
 										  </div>
 									  </div>
 						  
