@@ -48,6 +48,7 @@ func (c *Core) LoginHandler(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 
 	}
+	w.Header().Set("Content-Type", "application/json")
 	out, err := json.Marshal(auth)
 	w.WriteHeader(http.StatusOK)
 	fmt.Fprintf(w, string(out))
@@ -115,4 +116,19 @@ func (c *Core) PasswordReset(w http.ResponseWriter, r *http.Request) {
 //PasswordChange -
 func (c *Core) PasswordChange(w http.ResponseWriter, r *http.Request) {
 
+}
+
+//LogoutHnadler -
+func (c *Core) LogoutHnadler(w http.ResponseWriter, r *http.Request) {
+	var req str.Auth
+	var err error
+	err = json.NewDecoder(r.Body).Decode(&req)
+	if err != nil {
+		w.WriteHeader(300)
+		fmt.Fprintf(w, "wrong request")
+		return
+	}
+	c.p.LogoutSession(req)
+	w.WriteHeader(http.StatusOK)
+	fmt.Fprintf(w, "{'status' : 'succes'}")
 }

@@ -167,7 +167,15 @@ func (d *Database) userLoginSucces(userID int) error {
 		return errors.New("failed to open database")
 	}
 	defer db.Close()
-	statement, err := db.Prepare("update lastlogin set succes = 'y' where userid = ?")
+	statement, err := db.Prepare("update lastlogin set succes = ' ' where userid = ?")
+	if err != nil {
+		return errors.New("failed to prepare statement")
+	}
+	_, err = statement.Exec(userID)
+	if err != nil {
+		return errors.New("error while execution of query")
+	}
+	statement, err = db.Prepare("update lastlogin set succes = 'y' where userid = ?")
 	if err != nil {
 		return errors.New("failed to prepare statement")
 	}
@@ -186,6 +194,14 @@ func (d *Database) userLoginFail(userID int) error {
 	}
 	defer db.Close()
 	statement, err := db.Prepare("insert into loginincident(userid)values(?)")
+	if err != nil {
+		return errors.New("failed to prepare statement")
+	}
+	_, err = statement.Exec(userID)
+	if err != nil {
+		return errors.New("error while execution of query")
+	}
+	statement, err = db.Prepare("update lastlogin set succes = ' ' where userid = ?")
 	if err != nil {
 		return errors.New("failed to prepare statement")
 	}
@@ -236,6 +252,7 @@ func (d *Database) UserActivation(req s.RegisterRequest, mailer s.Mail) (s.Regis
 	return req, nil
 }
 
+//SetUserActive --
 func (d *Database) SetUserActive(tkn string) error {
 	db, err := sql.Open("mysql", d.master.acces)
 	if err != nil {

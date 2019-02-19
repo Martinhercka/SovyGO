@@ -53,6 +53,20 @@ func (s *Persist) AuthenticateSession(a str.Auth) bool {
 	return false
 }
 
+//LogoutSession --
+func (s *Persist) LogoutSession(a str.Auth) {
+	for index, element := range s.sesions {
+		if element.SessionID == a.SessionID {
+			if element.Token == a.Token && element.UserID == a.UserID && element.Username == a.Username {
+				s.sesions[index].Token = ""
+				s.sesions[index].SessionID = ""
+				s.sesions[index].Remember = false
+			}
+			break
+		}
+	}
+}
+
 func (s *Persist) collectGarbage() {
 	now := time.Now()
 	now = now.Add(-(5 * time.Minute))

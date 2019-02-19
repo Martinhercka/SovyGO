@@ -53,6 +53,7 @@ func (s *Server) StartServer() error {
 
 	s.r.HandleFunc("/auth/register", s.core.RegisterHandler).Methods("POST")
 	s.r.HandleFunc("/auth/login", s.core.LoginHandler).Methods("POST")
+	s.r.HandleFunc("/auth/logout", s.core.LogoutHnadler).Methods("POST")
 	s.r.HandleFunc("/key/new/", func(w http.ResponseWriter, r *http.Request) {
 		core.NewKey(w, r, &s.state)
 	})
