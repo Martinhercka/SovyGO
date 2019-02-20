@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"net/http"
 
-	lin "github.com/Martinhercka/SovyGo/bin/server/modules/linux"
 	str "github.com/Martinhercka/SovyGo/bin/server/modules/structures"
 )
 
@@ -21,7 +20,7 @@ func (c *Core) LinuxCreateUSer(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if c.p.AuthenticateSession(req.Auth) {
-		err = lin.CreateLinuxUser(req)
+		err = c.linux.CreateLinuxUser(req)
 		if err != nil {
 			w.WriteHeader(http.StatusBadRequest)
 			fmt.Fprintf(w, "{'status' : 'wrong request'}")

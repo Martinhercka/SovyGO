@@ -9,6 +9,7 @@ import (
 	auth "github.com/Martinhercka/SovyGo/bin/server/modules/authentication"
 	conf "github.com/Martinhercka/SovyGo/bin/server/modules/configuration"
 	dtb "github.com/Martinhercka/SovyGo/bin/server/modules/database"
+	lin "github.com/Martinhercka/SovyGo/bin/server/modules/linux"
 	prs "github.com/Martinhercka/SovyGo/bin/server/modules/persistance"
 	str "github.com/Martinhercka/SovyGo/bin/server/modules/structures"
 )
@@ -20,6 +21,7 @@ type Core struct {
 	Templates map[string]*template.Template
 	DB        dtb.Database
 	mail      str.Mail
+	linux     lin.Linux
 }
 
 type session struct {
