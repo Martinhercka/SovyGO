@@ -4,6 +4,14 @@ import (
 	"encoding/json"
 )
 
+//LinuxUSE --
+type LinuxUSE struct {
+	Auth     Auth   `json:"auth,omitempty"`
+	UserName string `json:"username,omitempty"`
+	Port     string `json:"port,omitempty"`
+	Password string `json:"password,omitempty"`
+}
+
 //PasswordChange --
 type PasswordChange struct {
 	Auth    Auth   `json:"auth,omitempty"`

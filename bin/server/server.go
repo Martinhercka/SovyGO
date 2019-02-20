@@ -59,6 +59,7 @@ func (s *Server) StartServer() error {
 	s.r.HandleFunc("/linux/newuser", notImplemented).Methods("post")
 	s.r.HandleFunc("/linux/newport", notImplemented).Methods("post")
 	s.r.HandleFunc("/linux/closeport", notImplemented).Methods("post")
+	s.r.HandleFunc("/linux/chpasswd", notImplemented).Methods("post")
 
 	s.r.HandleFunc("/mysql/newuser", s.core.CreateDBUserHandler).Methods("post")
 	s.r.HandleFunc("/mysql/newdatabase", s.core.CreateDBHandler).Methods("post")

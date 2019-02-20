@@ -149,7 +149,7 @@ func (c *Core) LogoutHnadler(w http.ResponseWriter, r *http.Request) {
 	var err error
 	err = json.NewDecoder(r.Body).Decode(&req)
 	if err != nil {
-		w.WriteHeader(300)
+		w.WriteHeader(http.StatusBadRequest)
 		fmt.Fprintf(w, "{'status' : 'wrong request'}")
 		return
 	}

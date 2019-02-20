@@ -24,9 +24,11 @@ func (c *Core) CreateDBHandler(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			w.WriteHeader(http.StatusUnauthorized)
 			fmt.Fprintf(w, "{'status' : 'unauthorized'}")
+			return
 		}
 		w.WriteHeader(http.StatusOK)
 		fmt.Fprintf(w, "{'status' : 'succes'}")
+		return
 	}
 	w.WriteHeader(http.StatusUnauthorized)
 	fmt.Fprintf(w, "{'status' : 'unauthorized'}")
@@ -48,9 +50,11 @@ func (c *Core) CreateDBUserHandler(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			w.WriteHeader(http.StatusUnauthorized)
 			fmt.Fprintf(w, "{'status' : 'unauthorized'}")
+			return
 		}
 		w.WriteHeader(http.StatusOK)
 		fmt.Fprintf(w, "{'status' : 'succes'}")
+		return
 	}
 	w.WriteHeader(http.StatusUnauthorized)
 	fmt.Fprintf(w, "{'status' : 'unauthorized'}")
@@ -72,9 +76,11 @@ func (c *Core) AsignDBUserHandler(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			w.WriteHeader(http.StatusUnauthorized)
 			fmt.Fprintf(w, "{'status' : 'unauthorized'}")
+			return
 		}
 		w.WriteHeader(http.StatusOK)
 		fmt.Fprintf(w, "{'status' : 'succes'}")
+		return
 	}
 	w.WriteHeader(http.StatusUnauthorized)
 	fmt.Fprintf(w, "{'status' : 'unauthorized'}")
