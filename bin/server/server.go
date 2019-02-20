@@ -1,13 +1,12 @@
 package server
 
 import (
+	"fmt"
 	"log"
+	"net/http"
 
 	"github.com/Martinhercka/SovyGo/bin/server/core"
 	"github.com/Martinhercka/SovyGo/bin/server/modules/persistance"
-
-	"fmt"
-	"net/http"
 
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
@@ -61,9 +60,9 @@ func (s *Server) StartServer() error {
 	s.r.HandleFunc("/linux/newport", notImplemented).Methods("post")
 	s.r.HandleFunc("/linux/closeport", notImplemented).Methods("post")
 
-	s.r.HandleFunc("/mysql/newuser", notImplemented).Methods("post")
-	s.r.HandleFunc("/mysql/newdatabase", notImplemented).Methods("post")
-	s.r.HandleFunc("/mysql/asignuser", notImplemented).Methods("post")
+	s.r.HandleFunc("/mysql/newuser", s.core.CreateDBUserHandler).Methods("post")
+	s.r.HandleFunc("/mysql/newdatabase", s.core.CreateDBHandler).Methods("post")
+	s.r.HandleFunc("/mysql/asignuser", s.core.AsignDBUserHandler).Methods("post")
 
 	s.r.HandleFunc("/auth/register", s.core.RegisterHandler).Methods("POST")
 	s.r.HandleFunc("/auth/login", s.core.LoginHandler).Methods("POST")

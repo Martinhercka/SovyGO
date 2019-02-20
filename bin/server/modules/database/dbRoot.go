@@ -89,7 +89,10 @@ func (d *Database) RootCreateDatabase(req s.CreateDB) error {
 //AsignUser --
 func (d *Database) AsignUser(req s.AsignDBUser) error {
 	if !isValidString(req.DBname) {
-
+		return errors.New("dbname")
+	}
+	if req.DBname == "information_schema" || req.DBname == "mysql" || req.DBname == "performance_schema" || req.DBname == "sys" {
+		return errors.New("dbname")
 	}
 	db, err := sql.Open("mysql", d.root.acces)
 	if err != nil {
