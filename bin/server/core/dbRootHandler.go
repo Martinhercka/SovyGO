@@ -16,22 +16,22 @@ func (c *Core) CreateDBHandler(w http.ResponseWriter, r *http.Request) {
 	err = json.NewDecoder(r.Body).Decode(&req)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		fmt.Fprintf(w, "{'status' : 'wrong request'}")
+		fmt.Fprintf(w, "{\"status\" : \"wrong request\"}")
 		return
 	}
 	if c.p.AuthenticateSession(req.Auth) {
 		err = c.DB.RootCreateDatabase(req)
 		if err != nil {
 			w.WriteHeader(http.StatusUnauthorized)
-			fmt.Fprintf(w, "{'status' : 'unauthorized'}")
+			fmt.Fprintf(w, "{\"status\" : \"unauthorized\"}")
 			return
 		}
 		w.WriteHeader(http.StatusOK)
-		fmt.Fprintf(w, "{'status' : 'succes'}")
+		fmt.Fprintf(w, "{\"status\" : \"succes\"}")
 		return
 	}
 	w.WriteHeader(http.StatusUnauthorized)
-	fmt.Fprintf(w, "{'status' : 'unauthorized'}")
+	fmt.Fprintf(w, "{\"status\" : \"unauthorized\"}")
 }
 
 //CreateDBUserHandler -
@@ -42,22 +42,22 @@ func (c *Core) CreateDBUserHandler(w http.ResponseWriter, r *http.Request) {
 	err = json.NewDecoder(r.Body).Decode(&req)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		fmt.Fprintf(w, "{'status' : 'wrong request'}")
+		fmt.Fprintf(w, "{\"status\" : \"wrong request\"}")
 		return
 	}
 	if c.p.AuthenticateSession(req.Auth) {
 		err = c.DB.RootCreateUSer(req)
 		if err != nil {
 			w.WriteHeader(http.StatusUnauthorized)
-			fmt.Fprintf(w, "{'status' : 'unauthorized'}")
+			fmt.Fprintf(w, "{\"status\" : \"unauthorized\"}")
 			return
 		}
 		w.WriteHeader(http.StatusOK)
-		fmt.Fprintf(w, "{'status' : 'succes'}")
+		fmt.Fprintf(w, "{\"status\" : \"succes\"}")
 		return
 	}
 	w.WriteHeader(http.StatusUnauthorized)
-	fmt.Fprintf(w, "{'status' : 'unauthorized'}")
+	fmt.Fprintf(w, "{\"status\" : \"unauthorized\"}")
 }
 
 //AsignDBUserHandler -
@@ -68,20 +68,20 @@ func (c *Core) AsignDBUserHandler(w http.ResponseWriter, r *http.Request) {
 	err = json.NewDecoder(r.Body).Decode(&req)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		fmt.Fprintf(w, "{'status' : 'wrong request'}")
+		fmt.Fprintf(w, "{\"status\" : \"wrong request\"}")
 		return
 	}
 	if c.p.AuthenticateSession(req.Auth) {
 		err = c.DB.AsignUser(req)
 		if err != nil {
 			w.WriteHeader(http.StatusUnauthorized)
-			fmt.Fprintf(w, "{'status' : 'unauthorized'}")
+			fmt.Fprintf(w, "{\"status\" : \"unauthorized\"}")
 			return
 		}
 		w.WriteHeader(http.StatusOK)
-		fmt.Fprintf(w, "{'status' : 'succes'}")
+		fmt.Fprintf(w, "{\"status\" : \"succes\"}")
 		return
 	}
 	w.WriteHeader(http.StatusUnauthorized)
-	fmt.Fprintf(w, "{'status' : 'unauthorized'}")
+	fmt.Fprintf(w, "{\"status\" : \"unauthorized\"}")
 }

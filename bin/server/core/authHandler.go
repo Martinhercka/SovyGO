@@ -17,7 +17,7 @@ func (c *Core) LoginHandler(w http.ResponseWriter, r *http.Request) {
 	err = json.NewDecoder(r.Body).Decode(&req)
 	if err != nil {
 		w.WriteHeader(300)
-		fmt.Fprintf(w, "{'status' : 'wrong request'}")
+		fmt.Fprintf(w, "{\"status\" : \"wrong request\"}")
 		return
 	}
 	user, err = c.DB.UserLoginRead(req)
@@ -25,16 +25,16 @@ func (c *Core) LoginHandler(w http.ResponseWriter, r *http.Request) {
 		if err.Error() == "wrong password" {
 			w.WriteHeader(http.StatusUnauthorized)
 			w.WriteHeader(400)
-			fmt.Fprintf(w, "{'status' : 'wrong password'}")
+			fmt.Fprintf(w, "{\"status\" : \"wrong password\"}")
 			return
 		} else if err.Error() == "not active" {
 			w.WriteHeader(http.StatusUnauthorized)
 			w.WriteHeader(400)
-			fmt.Fprintf(w, "{'status' : 'user not activated'}")
+			fmt.Fprintf(w, "{\"status\" : \"user not activated\"}")
 			return
 		} else {
 			w.WriteHeader(500)
-			fmt.Fprintf(w, "{'status' : 'internal error'}")
+			fmt.Fprintf(w, "{\"status\" : \"internal error\"}")
 			panic(err)
 		}
 	}
@@ -43,11 +43,11 @@ func (c *Core) LoginHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		if err.Error() == "session exist" {
 			w.WriteHeader(400)
-			fmt.Fprintf(w, "session exist")
+			fmt.Fprintf(w, "{\"status\" : \"session exist\"}")
 			return
 		}
 		w.WriteHeader(500)
-		fmt.Fprintf(w, "{'status' : 'internal error'}")
+		fmt.Fprintf(w, "{\"status\" : \"internal error\"}")
 		panic(err)
 
 	}
@@ -67,18 +67,18 @@ func (c *Core) RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		if err.Error() == "user exist" {
 			w.WriteHeader(400)
-			fmt.Fprintf(w, "{'status' : 'user already exist'}")
+			fmt.Fprintf(w, "{\"status\" : \"user already exist\"}")
 			return
 		}
 		w.WriteHeader(300)
-		fmt.Fprintf(w, "{'status' : 'wrong request'}")
+		fmt.Fprintf(w, "{\"status\" : \"wrong request\"}")
 		panic(err)
 	}
 
 	err = c.DB.UserSignup(reg)
 	if err != nil {
 		w.WriteHeader(500)
-		fmt.Fprintf(w, "{'status' : 'internal error'}")
+		fmt.Fprintf(w, "{\"status\" : \"internal error\"}")
 		panic(err)
 	}
 
@@ -96,7 +96,7 @@ func (c *Core) ActivationHandler(w http.ResponseWriter, r *http.Request) {
 	token, ok := r.URL.Query()["token"]
 	if !ok || len(token[0]) < 1 {
 		w.WriteHeader(http.StatusNotAcceptable)
-		fmt.Fprintf(w, "{'status' : 'no token'}")
+		fmt.Fprintf(w, "{\"status\" : \"no token\"}")
 		return
 	}
 	var err error
@@ -126,19 +126,19 @@ func (c *Core) PasswordChange(w http.ResponseWriter, r *http.Request) {
 	err = json.NewDecoder(r.Body).Decode(&req)
 	if err != nil {
 		w.WriteHeader(300)
-		fmt.Fprintf(w, "{'status' : 'wrong request'}")
+		fmt.Fprintf(w, "{\"status\" : \"wrong request\"}")
 		return
 	}
 	if c.p.AuthenticateSession(req.Auth) {
 		err = c.DB.UserChangePassword(req.Auth.UserID, req.NewPass, req.OldPass)
 		if err == nil {
 			w.WriteHeader(http.StatusOK)
-			fmt.Fprintf(w, "{'status' : 'succes'}")
+			fmt.Fprintf(w, "{\"status\" : \"succes\"}")
 			return
 		}
 	}
 	w.WriteHeader(300)
-	fmt.Fprintf(w, "{'status' : 'wrong request'}")
+	fmt.Fprintf(w, "{\"status\" : \"wrong request\"}")
 
 }
 
@@ -150,10 +150,10 @@ func (c *Core) LogoutHnadler(w http.ResponseWriter, r *http.Request) {
 	err = json.NewDecoder(r.Body).Decode(&req)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		fmt.Fprintf(w, "{'status' : 'wrong request'}")
+		fmt.Fprintf(w, "{\"status\" : \"wrong request\"}")
 		return
 	}
 	c.p.LogoutSession(req)
 	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, "{'status' : 'succes'}")
+	fmt.Fprintf(w, "{\"status\" : \"succes\"}")
 }

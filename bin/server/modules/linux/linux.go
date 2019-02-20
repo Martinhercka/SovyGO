@@ -24,7 +24,9 @@ func isValidUsername(some string) bool {
 }
 
 func (l *Linux) CreateLinuxUser(req str.LinuxUSE) error {
+	if !isValidUsername(req.UserName) {
 
+	}
 	return nil
 }
 
