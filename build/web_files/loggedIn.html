@@ -31,8 +31,8 @@
 						<li><a href="#"></a></li>
 						<li><a href="#"></a></li>
 						<li><a href="#"></a></li>
-						<li id="signInBtn"><a href="#"><button type="button" id="signInButton" class="btn btn-info btn-lg" data-toggle="modal" data-target="#signInModal">Sign in</button></a></li>
-						<li id="signUpBtn"><a href="#"><button type="button" id="signUpButton" class="btn btn-info btn-lg" data-toggle="modal" data-target="#signUpModal">Sign up</button></a></li>
+						<li><a href="#"> <button type="button" id="logoutBtn" class="btn btn-info btn-lg" data-toggle="modal" data-target="#signInModal">Logout</button></a></li>
+
 
 					</ul>
 				</nav>
@@ -43,73 +43,8 @@
 	</div>
 
  <!-- Modal -->
- <div class="modal fade" id="signInModal" role="dialog">
-    <div class="modal-dialog">
-
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h1 class="modal-title" style="text-align:center">Sign in</h1>
-        </div>
-        <div class="modal-body">
-			<div class="auth__auth">
-				<h1 class="auth__title" style="text-align:center">Access your account</h1>
-				<p>Fill in your email and password to proceed</p>
-				<form method='post' id="loginForm" action="/example" autocompelete="new-password" role="presentation" class="form">
-
-					<label>Email</label>
-					<input type="text" name="email" id='loginUsername' placeholder="you@example.com">
-					<label>Password</label>
-					<input type="password" name="password" id='loginPassword' placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" autocomplete="off">
-					<button type='button' id="loginBtn" class="button button__accent">Log in</button>
-					<h6 class="center-align" id="try" >Forgot your password?</h6>
-				</form>
-			</div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-
-    </div>
-  </div>
-  <div class="modal fade" id="signUpModal" role="dialog">
-    <div class="modal-dialog">
-
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h1 class="modal-title" style="text-align:center">Sign up</h1>
-        </div>
-        <div class="modal-body">
-			<div class="auth__auth">
-				<h1 class="auth__title" id="signUpH1" style="text-align:center">Create an account</h1>
-
-				<form method='post' id="registerForm" action="/example" autocompelete="new-password" role="presentation" class="form">
-					<label>Username</label>
-					<input type="text" id="username" class="fakefield">
 
 
-					<label>Email</label>
-					<input type="text" name="email" id="mail" placeholder="you@example.com">
-					<label>Password</label>
-					<input type="password" name="password" id="pass" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" autocomplete="off">
-					<label>Confirm Password</label>
-					<input type="password" name="password" id='confirmpassword' placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" autocomplete="off">
-					<button type='button' id="registerBtn" class="button button__accent">Register</button>
-					<a href=""><h6 class="center-align" >Forgot your password?</h6></a>
-				</form>
-			</div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-
-    </div>
-  </div>
 	<!-- Hero unit -->
 	<div class="hero">
 		<div class="hero__overlay hero__overlay--gradient"></div>
