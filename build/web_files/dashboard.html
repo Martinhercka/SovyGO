@@ -2,6 +2,7 @@
 <html lang='en'>
 <head>
 	<meta class="utf-8">
+
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
@@ -13,94 +14,46 @@
 </head>
 
 <body>
-	<!-- navbar -->
-	<div class="navbar">
+	<!-- Hero(extended) navbar -->
+	<div class="navbar navbar--extended" style="background-color: #222254">
+
 		<nav class="nav__mobile"></nav>
 		<div class="container">
 			<div class="navbar__inner">
-				<a href="#" class="navbar__logo"><img id="golang" src="images/golang.png">GoWEB</a>
+
+				<a href="index.html" class="navbar__logo"><img id="golang" src="images/golang.png">GoWEB</a>
 				<nav class="navbar__menu">
-					<li><a href="index.html">Home</a></li>
-					<li><a href="#">Profile</a></li>
-					<li><a href="#">Profile</a></li>
-					<li><a href="#"></a></li>
-					<li><a href="#"></a></li>
-					<li><a href="#"></a></li>
-					<li><a href="#"></a></li>
-					<li><a href="#"> <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#signInModal">Sign in</button></a></li>
-					<li><a href="#"> <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#signUpModal">Sign up</button></a></li>
+					<ul>
+						<li><a href="#">Home</a></li>
+						<li><a href="#">Profile</a></li>
+						<li><a href="#">Profile</a></li>
+						<li><a href="#"></a></li>
+						<li><a href="#"></a></li>
+						<li><a href="#"></a></li>
+						<li class="dropdown"><a href="#"><a href="#"> <button type="button" id="loggedIn"  class="btn btn-info btn-lg" data-toggle="modal" data-target="#signInModal"></button></a>
+
+							<ul class="dropdown-menu">
+						         <li><a href="dashboard.html">Profile</a></li>
+						         <li><a href="#">Projects</a></li>
+						         <li><a href="#">...</a></li>
+						         <li><a href="#">...</a></li>
+						       </ul>
+
+
+
+						</li>
+						<li><a href="#"> <button type="button" id="logoutBtn" class="btn btn-info btn-lg" data-toggle="modal" data-target="#signInModal">Logout</button></a></li>
+
+
+					</ul>
 				</nav>
+
 				<div class="navbar__menu-mob"><a href="" id='toggle'><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z" class=""></path></svg></a></div>
 			</div>
 		</div>
 	</div>
-	<div class="modal fade" id="signInModal" role="dialog">
-		 <div class="modal-dialog">
-
-			 <!-- Modal content-->
-			 <div class="modal-content">
-				 <div class="modal-header">
-					 <button type="button" class="close" data-dismiss="modal">&times;</button>
-					 <h1 class="modal-title" style="text-align:center">Sign in</h1>
-				 </div>
-				 <div class="modal-body">
-			 <div class="auth__auth">
-				 <h1 class="auth__title" style="text-align:center">Access your account</h1>
-				 <p>Fill in your email and password to proceed</p>
-				 <form method='post' action="/example" autocompelete="new-password" role="presentation" class="form">
-					 <input name="email" class="fakefield">
-					 <label>Email</label>
-					 <input type="text" name="email" id='email' placeholder="you@example.com">
-					 <label>Password</label>
-					 <input type="password" name="password" id='password' placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" autocomplete="off">
-					 <button type='submit' class="button button__accent">Log in</button>
-					 <a href=""><h6 class="center-align" >Forgot your password?</h6></a>
-				 </form>
-			 </div>
-				 </div>
-				 <div class="modal-footer">
-					 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				 </div>
-			 </div>
-
-		 </div>
-	 </div>
-	 <div class="modal fade" id="signUpModal" role="dialog">
-		 <div class="modal-dialog">
-
-			 <!-- Modal content-->
-			 <div class="modal-content">
-				 <div class="modal-header">
-					 <button type="button" class="close" data-dismiss="modal">&times;</button>
-					 <h1 class="modal-title" style="text-align:center">Sign up</h1>
-				 </div>
-				 <div class="modal-body">
-			 <div class="auth__auth">
-				 <h1 class="auth__title" style="text-align:center">Create an account</h1>
-
-				 <form method='post' action="/example" autocompelete="new-password" role="presentation" class="form">
-					 <label>Username</label>
-					 <input type="text" id="username" class="fakefield">
 
 
-					 <label>Email</label>
-					 <input type="text" name="email" id="mail" placeholder="you@example.com">
-					 <label>Password</label>
-					 <input type="password" name="password" id="pass" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" autocomplete="off">
-					 <label>Confirm Password</label>
-					 <input type="password" name="password" id='confirmpassword' placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" autocomplete="off">
-					 <button type='button' id="registerBtn" class="button button__accent">Register</button>
-					 <a href=""><h6 class="center-align" >Forgot your password?</h6></a>
-				 </form>
-			 </div>
-				 </div>
-				 <div class="modal-footer">
-					 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				 </div>
-			 </div>
-
-		 </div>
-	 </div>
 	<!-- Page content -->
 	<div class="app">
 		<div class="container">
@@ -270,5 +223,6 @@
 	</div>
 
 <script src='js/app.js'></script>
+<script src='js/registerLogin.js'></script>
 </body>
 </html>
