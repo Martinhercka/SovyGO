@@ -23,6 +23,7 @@ func isValidUsername(some string) bool {
 	return true
 }
 
+//CreateLinuxUser --
 func (l *Linux) CreateLinuxUser(req str.LinuxUSE) error {
 	if !isValidUsername(req.UserName) {
 
@@ -30,22 +31,26 @@ func (l *Linux) CreateLinuxUser(req str.LinuxUSE) error {
 	return nil
 }
 
-func (l *Linux) OpenLinuxPort() error {
+//OpenLinuxPort -
+func (l *Linux) OpenLinuxPort(req str.LinuxUSE) error {
 
 	return nil
 }
 
-func (l *Linux) CloseLinuxPort() error {
+//CloseLinuxPort -
+func (l *Linux) CloseLinuxPort(req str.LinuxUSE) error {
 
 	return nil
 }
 
-func (l *Linux) ChangeLinuxPassword() error {
+//ChangeLinuxPassword -
+func (l *Linux) ChangeLinuxPassword(req str.LinuxUSE) error {
 
 	return nil
 }
 
-func (l *Linux) ListLinuxUser() error {
+//ListLinuxUser -
+func (l *Linux) ListLinuxUser(req str.LinuxUSE) error {
 
 	return nil
 }

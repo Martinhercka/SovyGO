@@ -20,7 +20,7 @@ func (c *Core) LinuxCreateUSer(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if c.p.AuthenticateSession(req.Auth) {
-		err = c.linux.CreateLinuxUser(req)
+		err = c.DB.LinuxCreateUser(req)
 		if err != nil {
 			w.WriteHeader(http.StatusBadRequest)
 			fmt.Fprintf(w, "{\"status\" : \"wrong request\"}")
@@ -45,7 +45,7 @@ func (c *Core) LinuxOpenPort(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if c.p.AuthenticateSession(req.Auth) {
-		err = c.linux.OpenLinuxPort(req)
+		err = c.DB.LinuxOpenPort(req)
 		if err != nil {
 			w.WriteHeader(http.StatusBadRequest)
 			fmt.Fprintf(w, "{\"status\" : \"wrong request\"}")
@@ -95,7 +95,7 @@ func (c *Core) LinuxChPasswd(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if c.p.AuthenticateSession(req.Auth) {
-		err = c.linux.ChangeLinuxPassword(req)
+		err = c.DB.LinuxChPasswd(req)
 		if err != nil {
 			w.WriteHeader(http.StatusBadRequest)
 			fmt.Fprintf(w, "{\"status\" : \"wrong request\"}")
