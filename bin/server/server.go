@@ -56,10 +56,10 @@ func (s *Server) StartServer() error {
 	s.r.HandleFunc("/project/listall", notImplemented).Methods("post")
 	s.r.HandleFunc("/project/list", notImplemented).Methods("post")
 
-	s.r.HandleFunc("/linux/newuser", notImplemented).Methods("post")
-	s.r.HandleFunc("/linux/newport", notImplemented).Methods("post")
-	s.r.HandleFunc("/linux/closeport", notImplemented).Methods("post")
-	s.r.HandleFunc("/linux/chpasswd", notImplemented).Methods("post")
+	s.r.HandleFunc("/linux/newuser", s.core.LinuxCreateUSer).Methods("post")
+	s.r.HandleFunc("/linux/newport", s.core.LinuxOpenPort).Methods("post")
+	s.r.HandleFunc("/linux/closeport", s.core.LinuxClosePort).Methods("post")
+	s.r.HandleFunc("/linux/chpasswd", s.core.LinuxChPasswd).Methods("post")
 
 	s.r.HandleFunc("/mysql/newuser", s.core.CreateDBUserHandler).Methods("post")
 	s.r.HandleFunc("/mysql/newdatabase", s.core.CreateDBHandler).Methods("post")
