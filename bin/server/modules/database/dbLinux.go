@@ -93,7 +93,7 @@ func (d *Database) LinuxOpenPort(req s.LinuxUSE) error {
 	cm.Wait()
 	io.Copy(os.Stdout, &b2)
 
-	statement, err = db.Prepare("update linuxport set available = 'n' where port = ?")
+	statement, err = db.Prepare("update linuxport set open = 'y' where port = ?")
 	_, err = statement.Exec(req.Port)
 	if err != nil {
 		return err
@@ -154,7 +154,7 @@ func (d *Database) LinuxClosePort(req s.LinuxUSE) error {
 	cm.Wait()
 	io.Copy(os.Stdout, &b2)
 
-	statement, err = db.Prepare("update linuxport set available = 'y' where port = ?")
+	statement, err = db.Prepare("update linuxport set open = 'n' where port = ?")
 	_, err = statement.Exec(req.Port)
 	if err != nil {
 		return err

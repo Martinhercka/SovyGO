@@ -49,6 +49,7 @@ func (c *Core) LinuxOpenPort(w http.ResponseWriter, r *http.Request) {
 		err = c.DB.LinuxOpenPort(req)
 		if err != nil {
 			w.WriteHeader(http.StatusBadRequest)
+			fmt.Println(err.Error())
 			fmt.Fprintf(w, "{\"status\" : \"wrong request\"}")
 			return
 		}
