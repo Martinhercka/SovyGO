@@ -27,7 +27,8 @@ func (c *Core) LinuxCreateUSer(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		w.WriteHeader(http.StatusOK)
-		fmt.Fprintf(w, "{\"status\" : \"succes\"}")
+		fmt.Fprintf(w, "{\"status\" : \"success\"}")
+		return
 	}
 	w.WriteHeader(http.StatusUnauthorized)
 	fmt.Fprintf(w, "{\"status\" : \"unauthorized\"}")
@@ -52,7 +53,8 @@ func (c *Core) LinuxOpenPort(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		w.WriteHeader(http.StatusOK)
-		fmt.Fprintf(w, "{\"status\" : \"succes\"}")
+		fmt.Fprintf(w, "{\"status\" : \"success\"}")
+		return
 	}
 	w.WriteHeader(http.StatusUnauthorized)
 	fmt.Fprintf(w, "{\"status\" : \"unauthorized\"}")
@@ -78,6 +80,7 @@ func (c *Core) LinuxAvailablePort(w http.ResponseWriter, r *http.Request) {
 		}
 		w.WriteHeader(http.StatusOK)
 		fmt.Fprintf(w, out)
+		return
 	}
 	w.WriteHeader(http.StatusUnauthorized)
 	fmt.Fprintf(w, "{\"status\" : \"unauthorized\"}")
@@ -102,7 +105,8 @@ func (c *Core) LinuxClosePort(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		w.WriteHeader(http.StatusOK)
-		fmt.Fprintf(w, "{\"status\" : \"succes\"}")
+		fmt.Fprintf(w, "{\"status\" : \"success\"}")
+		return
 	}
 	w.WriteHeader(http.StatusUnauthorized)
 	fmt.Fprintf(w, "{\"status\" : \"unauthorized\"}")
@@ -127,7 +131,8 @@ func (c *Core) LinuxChPasswd(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		w.WriteHeader(http.StatusOK)
-		fmt.Fprintf(w, "{\"status\" : \"succes\"}")
+		fmt.Fprintf(w, "{\"status\" : \"success\"}")
+		return
 	}
 	w.WriteHeader(http.StatusUnauthorized)
 	fmt.Fprintf(w, "{\"status\" : \"unauthorized\"}")

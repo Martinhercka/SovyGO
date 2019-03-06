@@ -8,6 +8,7 @@ import (
 	"os"
 	"os/exec"
 	"runtime"
+	"strconv"
 
 	s "github.com/Martinhercka/SovyGo/bin/server/modules/structures"
 	_ "github.com/go-sql-driver/mysql" //needed
@@ -115,9 +116,9 @@ func (d *Database) LinuxAvailablePort(req s.LinuxUSE) (string, error) {
 	var swap int
 	for resultset.Next() {
 		_ = resultset.Scan(&swap)
-		out += "\n\t\t{\"port\":\"" + string(swap) + "\"},"
+		out += "\n\t\t{\"port\":" + strconv.Itoa(swap) + "},"
 	}
-	out += "\n\t]\n"
+	out += "\n\t]\n}"
 	return out, nil
 }
 
