@@ -58,7 +58,7 @@ func (s *Server) StartServer() error {
 
 	s.r.HandleFunc("/linux/newuser", s.core.LinuxCreateUSer).Methods("post")
 	s.r.HandleFunc("/linux/newport", s.core.LinuxOpenPort).Methods("post")
-	s.r.HandleFunc("/linux/available", s.core.LinuxavailablePort).Methods("post")
+	s.r.HandleFunc("/linux/available", s.core.LinuxAvailablePort).Methods("post")
 	s.r.HandleFunc("/linux/closeport", s.core.LinuxClosePort).Methods("post")
 	s.r.HandleFunc("/linux/chpasswd", s.core.LinuxChPasswd).Methods("post")
 

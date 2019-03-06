@@ -2,7 +2,8 @@
     "server" : {
         "folder" : "~/go/src/gitlab.com/sovygo/Server",
         "port": ":8010",
-	"host" : ""
+        "host" : "",
+        "shutdownkey": ""
     },
     "mailer" : {
         "username" : "",
