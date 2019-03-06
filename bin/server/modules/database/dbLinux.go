@@ -100,6 +100,27 @@ func (d *Database) LinuxOpenPort(req s.LinuxUSE) error {
 	return nil
 }
 
+//LinuxAvailablePort --
+func (d *Database) LinuxAvailablePort(req s.LinuxUSE) (string, error) {
+	var err error
+	var out string
+	db, err := sql.Open("mysql", d.master.acces)
+	if err != nil {
+		return out, errors.New("failed to open database")
+	}
+	defer db.Close()
+	statement, err := db.Prepare("select port from linuxport where available = 'y'")
+	resultset, err := statement.Query()
+	out = "{\n\t\"ports\":["
+	var swap int
+	for resultset.Next() {
+		_ = resultset.Scan(&swap)
+		out += "\n\t\t{\"port\":\"" + string(swap) + "\"},"
+	}
+	out += "\n\t]\n"
+	return out, nil
+}
+
 //LinuxClosePort --
 func (d *Database) LinuxClosePort(req s.LinuxUSE) error {
 	if !isValidString(req.UserName) {

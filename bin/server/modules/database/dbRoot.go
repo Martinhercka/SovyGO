@@ -3,6 +3,7 @@ package database
 import (
 	"database/sql"
 	"errors"
+	"fmt"
 	"strings"
 
 	s "github.com/Martinhercka/SovyGo/bin/server/modules/structures"
@@ -14,7 +15,8 @@ func isValidString(some string) bool {
 		return false
 	}
 	for _, element := range strings.Split(some, "") {
-		if element == "%" || element == "*" || element == "?" || element == ";" {
+		if element == "%" || element == "*" || element == "?" || element == ";" || element == "\\" {
+			fmt.Println("isValidString REACTED")
 			return false
 		}
 	}
