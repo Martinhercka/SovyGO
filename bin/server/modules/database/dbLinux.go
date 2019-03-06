@@ -114,9 +114,14 @@ func (d *Database) LinuxAvailablePort(req s.LinuxUSE) (string, error) {
 	resultset, err := statement.Query()
 	out = "{\n\t\"ports\":["
 	var swap int
+	var first = true
 	for resultset.Next() {
 		_ = resultset.Scan(&swap)
-		out += "\n\t\t{\"port\":" + strconv.Itoa(swap) + "},"
+		if first {
+			out += "\n\t\t{\"port\":" + strconv.Itoa(swap) + "}"
+			first = false
+		}
+		out += ",\n\t\t{\"port\":" + strconv.Itoa(swap) + "}"
 	}
 	out += "\n\t]\n}"
 	return out, nil
