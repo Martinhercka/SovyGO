@@ -90,14 +90,30 @@
 				<form method='post' id="registerForm" action="/example" autocompelete="new-password" role="presentation" class="form">
 					<label>Username</label>
 					<input type="text" id="username" class="fakefield">
-
-
+                    <label>First name</label>
+					<input type="text" id="firstname" class="fakefield">
+                    <label>Last name</label>
+					<input type="text" id="lastname" class="fakefield">
 					<label>Email</label>
 					<input type="text" name="email" id="mail" placeholder="you@example.com">
 					<label>Password</label>
 					<input type="password" name="password" id="pass" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" autocomplete="off">
 					<label>Confirm Password</label>
 					<input type="password" name="password" id='confirmpassword' placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" autocomplete="off">
+                    	  <div class="form-group">
+
+										 
+											  <label for="phone"><h4>Class</h4></label>
+												<select class="form-control"  id="selectClass">
+												 <option value="" selected disabled hidden>Choose option...</option>
+											 <option>1.N</option>
+											 <option>2.N</option>
+											 <option>3.N</option>
+
+
+										 </select>
+										 
+									  </div>
 					<button type='button' id="registerBtn" class="button button__accent">Register</button>
 					<a href=""><h6 class="center-align" >Forgot your password?</h6></a>
 				</form>

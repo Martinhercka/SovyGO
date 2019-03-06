@@ -1217,11 +1217,15 @@ select {
       max-height: 400px; } }
 
 .auth__auth {
-  text-align: center; }
+
+
+ }
   @media (min-width: 992px) {
     .auth__auth {
       width: 50%;
-      flex-shrink: 0; } }
+      margin-right: 500px;
+
+     } }
 
 .auth__title {
   font-size: 1.728em; }
