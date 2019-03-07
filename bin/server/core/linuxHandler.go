@@ -43,6 +43,7 @@ func (c *Core) LinuxOpenPort(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		fmt.Fprintf(w, "{\"status\" : \"wrong request\"}")
+		panic(err)
 		return
 	}
 	if c.p.AuthenticateSession(req.Auth) {
@@ -51,6 +52,7 @@ func (c *Core) LinuxOpenPort(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(http.StatusBadRequest)
 			fmt.Println(err.Error())
 			fmt.Fprintf(w, "{\"status\" : \"wrong request\"}")
+			panic(err)
 			return
 		}
 		w.WriteHeader(http.StatusOK)
@@ -70,6 +72,7 @@ func (c *Core) LinuxAvailablePort(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		fmt.Fprintf(w, "{\"status\" : \"wrong request\"}")
+		panic(err)
 		return
 	}
 	if c.p.AuthenticateSession(req.Auth) {
@@ -77,6 +80,7 @@ func (c *Core) LinuxAvailablePort(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			w.WriteHeader(http.StatusBadRequest)
 			fmt.Fprintf(w, "{\"status\" : \"wrong request\"}")
+			panic(err)
 			return
 		}
 		w.WriteHeader(http.StatusOK)
@@ -96,6 +100,7 @@ func (c *Core) LinuxMyPorts(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		fmt.Fprintf(w, "{\"status\" : \"wrong request\"}")
+		panic(err)
 		return
 	}
 	if c.p.AuthenticateSession(req.Auth) {
@@ -103,6 +108,7 @@ func (c *Core) LinuxMyPorts(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			w.WriteHeader(http.StatusBadRequest)
 			fmt.Fprintf(w, "{\"status\" : \"wrong request\"}")
+			panic(err)
 			return
 		}
 		w.WriteHeader(http.StatusOK)
@@ -122,6 +128,7 @@ func (c *Core) LinuxClosePort(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		fmt.Fprintf(w, "{\"status\" : \"wrong request\"}")
+		panic(err)
 		return
 	}
 	if c.p.AuthenticateSession(req.Auth) {
@@ -129,6 +136,7 @@ func (c *Core) LinuxClosePort(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			w.WriteHeader(http.StatusBadRequest)
 			fmt.Fprintf(w, "{\"status\" : \"wrong request\"}")
+			panic(err)
 			return
 		}
 		w.WriteHeader(http.StatusOK)
