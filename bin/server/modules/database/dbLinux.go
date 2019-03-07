@@ -49,9 +49,9 @@ func (d *Database) LinuxCreateUser(req s.LinuxUSE) error {
 		adduser.Wait()
 		fmt.Println("done")
 	*/
-	printargs := req.Password + "\n" + req.Password + "\n\n\n\n\n\nY\n"
+	//printargs := req.Password + "\n" + req.Password + "\n\n\n\n\n\nY\n"
 
-	cm := exec.Command("sh", "adu.sh", printargs, req.UserName)
+	cm := exec.Command("sh", "adu.sh", req.Password, req.UserName)
 	var b2 bytes.Buffer
 	cm.Stdout = &b2
 	cm.Start()
