@@ -9,7 +9,6 @@ import (
 
 //Activationmail --
 func Activationmail(email string, tokenn string, mailer str.Mail) {
-
 	m := gomail.NewMessage()
 	m.SetHeader("From", "martinhercka1@gmail.com")
 	m.SetHeader("To", email)

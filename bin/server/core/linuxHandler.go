@@ -87,6 +87,32 @@ func (c *Core) LinuxAvailablePort(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "{\"status\" : \"unauthorized\"}")
 }
 
+//LinuxMyPorts -
+func (c *Core) LinuxMyPorts(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	var req str.LinuxUSE
+	var err error
+	err = json.NewDecoder(r.Body).Decode(&req)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		fmt.Fprintf(w, "{\"status\" : \"wrong request\"}")
+		return
+	}
+	if c.p.AuthenticateSession(req.Auth) {
+		out, err := c.DB.LinuxMyPorts(req)
+		if err != nil {
+			w.WriteHeader(http.StatusBadRequest)
+			fmt.Fprintf(w, "{\"status\" : \"wrong request\"}")
+			return
+		}
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprintf(w, out)
+		return
+	}
+	w.WriteHeader(http.StatusUnauthorized)
+	fmt.Fprintf(w, "{\"status\" : \"unauthorized\"}")
+}
+
 //LinuxClosePort -
 func (c *Core) LinuxClosePort(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
