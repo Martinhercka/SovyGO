@@ -120,6 +120,7 @@ func (d *Database) LinuxAvailablePort(req s.LinuxUSE) (string, error) {
 		if first {
 			out += "\n\t\t{\"port\":" + strconv.Itoa(swap) + "}"
 			first = false
+			continue
 		}
 		out += ",\n\t\t{\"port\":" + strconv.Itoa(swap) + "}"
 	}
