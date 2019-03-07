@@ -105,7 +105,9 @@ func (c *Core) ActivationHandler(w http.ResponseWriter, r *http.Request) {
 	tkn = token[0]
 	err = c.DB.SetUserActive(tkn)
 	if err != nil {
-		panic(err)
+		w.WriteHeader(400)
+		fmt.Fprintf(w, "{\"status\" : \"wrong token\"}")
+		return
 	}
 	w.WriteHeader(http.StatusOK)
 	fmt.Fprintf(w, "{\"status\" : \"success\"}")
