@@ -68,9 +68,6 @@ func (d *Database) LinuxCreateUser(req s.LinuxUSE) error {
 
 //LinuxOpenPort --
 func (d *Database) LinuxOpenPort(req s.LinuxUSE) error {
-	if !isValidString(req.UserName) {
-		return errors.New("wrong request")
-	}
 	var err error
 	db, err := sql.Open("mysql", d.master.acces)
 	if err != nil {
@@ -157,9 +154,6 @@ func (d *Database) LinuxMyPorts(req s.LinuxUSE) (string, error) {
 
 //LinuxClosePort --
 func (d *Database) LinuxClosePort(req s.LinuxUSE) error {
-	if !isValidString(req.UserName) {
-		return errors.New("wrong request")
-	}
 	var err error
 	db, err := sql.Open("mysql", d.master.acces)
 	if err != nil {
