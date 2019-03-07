@@ -16,7 +16,7 @@ func (c *Core) LoginHandler(w http.ResponseWriter, r *http.Request) {
 	var user str.UserIn
 	err = json.NewDecoder(r.Body).Decode(&req)
 	if err != nil {
-		w.WriteHeader(300)
+		w.WriteHeader(400)
 		fmt.Fprintf(w, "{\"status\" : \"wrong request\"}")
 		return
 	}
@@ -24,7 +24,7 @@ func (c *Core) LoginHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		if err.Error() == "wrong password" {
 			w.WriteHeader(http.StatusUnauthorized)
-			w.WriteHeader(400)
+			w.WriteHeader(401)
 			fmt.Fprintf(w, "{\"status\" : \"wrong password\"}")
 			return
 		} else if err.Error() == "not active" {
@@ -70,7 +70,7 @@ func (c *Core) RegisterHandler(w http.ResponseWriter, r *http.Request) {
 			fmt.Fprintf(w, "{\"status\" : \"user already exist\"}")
 			return
 		}
-		w.WriteHeader(300)
+		w.WriteHeader(400)
 		fmt.Fprintf(w, "{\"status\" : \"wrong request\"}")
 		panic(err)
 	}
@@ -84,7 +84,8 @@ func (c *Core) RegisterHandler(w http.ResponseWriter, r *http.Request) {
 
 	c.DB.UserActivation(reg, c.mail)
 
-	sendSimpleMsg(w, http.StatusCreated, "created")
+	w.WriteHeader(http.StatusOK)
+	fmt.Fprintf(w, "{\"status\" : \"success\"}")
 	//Test print
 	//c.Templates["register"].Execute(w, nil)
 
@@ -95,7 +96,7 @@ func (c *Core) ActivationHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	token, ok := r.URL.Query()["token"]
 	if !ok || len(token[0]) < 1 {
-		w.WriteHeader(http.StatusNotAcceptable)
+		w.WriteHeader(400)
 		fmt.Fprintf(w, "{\"status\" : \"no token\"}")
 		return
 	}
@@ -106,6 +107,8 @@ func (c *Core) ActivationHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		panic(err)
 	}
+	w.WriteHeader(http.StatusOK)
+	fmt.Fprintf(w, "{\"status\" : \"success\"}")
 }
 
 //PasswordResetRequire -
@@ -125,7 +128,7 @@ func (c *Core) PasswordChange(w http.ResponseWriter, r *http.Request) {
 	var err error
 	err = json.NewDecoder(r.Body).Decode(&req)
 	if err != nil {
-		w.WriteHeader(300)
+		w.WriteHeader(400)
 		fmt.Fprintf(w, "{\"status\" : \"wrong request\"}")
 		return
 	}
@@ -137,7 +140,7 @@ func (c *Core) PasswordChange(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
-	w.WriteHeader(300)
+	w.WriteHeader(400)
 	fmt.Fprintf(w, "{\"status\" : \"wrong request\"}")
 
 }
