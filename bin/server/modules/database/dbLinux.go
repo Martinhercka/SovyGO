@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"database/sql"
 	"errors"
+	"fmt"
 	"io"
 	"os"
 	"os/exec"
@@ -54,8 +55,14 @@ func (d *Database) LinuxCreateUser(req s.LinuxUSE) error {
 	cm := exec.Command("sh", "adu.sh", req.Password, req.UserName)
 	var b2 bytes.Buffer
 	cm.Stdout = &b2
-	cm.Start()
-	cm.Wait()
+	err = cm.Start()
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+	err = cm.Wait()
+	if err != nil {
+		fmt.Println(err.Error())
+	}
 	io.Copy(os.Stdout, &b2)
 
 	statement, err = db.Prepare("insert into linuxuser(username, createdby) values(?,?)")
