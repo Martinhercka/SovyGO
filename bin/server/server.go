@@ -71,7 +71,7 @@ func (s *Server) StartServer() error {
 	s.r.HandleFunc("/auth/login", s.core.LoginHandler).Methods("POST")
 	s.r.HandleFunc("/auth/logout", s.core.LogoutHnadler).Methods("POST")
 	s.r.HandleFunc("/auth/chpasswd", s.core.PasswordChange).Methods("POST")
-	s.r.HandleFunc("/auth/activate", s.core.ActivationHandler).Methods("POST")
+	s.r.HandleFunc("/auth/activate", s.core.ActivationHandler).Methods("GET")
 	s.r.HandleFunc("/key/new/", func(w http.ResponseWriter, r *http.Request) {
 		core.NewKey(w, r, &s.state)
 	})
