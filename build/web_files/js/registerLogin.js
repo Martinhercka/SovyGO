@@ -1,10 +1,12 @@
 document.addEventListener('DOMContentLoaded',function(){
 var sessionID;
  
-var username,email,password,confirmpass,firstname,lastname,selectedClass;
+var username,email,password,confirmpass,firstname,lastname,selectedClass,openPort,oldPassword,confirmOldPassword,newPassword,confirmNewPassword;
 var loginUsername, loginPassword;
 
 var tokk,iduser,sessID;
+
+    
 
   $("#registerBtn").click(function(){
     username = $("#username").val();
@@ -35,7 +37,7 @@ else {
         dataType: 'json',
         statusCode: {
     200: function (response) {
-        alert("200 code")
+        
 
     },
     201: function (response) {
@@ -76,6 +78,7 @@ $("#loginBtn").click(function(){
   if(sessionID ==""||sessionID=="null"){
   localStorage.setItem("sessionID",generateSesssionId())
   console.log(sessionID)
+      $("#h1Username").html(loginUsername);
 }
 else {
   sessionID = localStorage.getItem("sessionID");
@@ -83,6 +86,7 @@ else {
 }
 loginUsername = $("#loginUsername").val();
 loginPassword = $("#loginPassword").val();
+     
 console.log(sessionID+" "+loginUsername+" "+loginPassword);
 
 $.ajax({
@@ -202,13 +206,13 @@ window.location.href = "index.html";
     
     
     
-$("#loggedIn").html('Logged as: '+localStorage.getItem("usrname")+" ▼");
+$("#loggedIn").html('Logged as: '+localStorage.getItem("usrname"));
 
     $("#mysqlButton").click(function(){
         sessID = sessionID = localStorage.getItem("sessID");
         tokk = localStorage.getItem("tokk");
         iduser = localStorage.getItem("iduser");
-        
+      $("#h1Username").html(localStorage.getItem("usrname"));
         
           $.ajax({
 
@@ -257,8 +261,203 @@ $("#loggedIn").html('Logged as: '+localStorage.getItem("usrname")+" ▼");
         
         });
     
+    $("#btnOpenPort").click(function(){
+        openPort = $("#portSelect option:selected").val(); 
+       
+
+          $.ajax({
+
+      traditional: true,
+      type:"POST",
+      url: 'http://itsovy.sk:1122/linux/openport',
+      contentType: 'application/json',
+      data: JSON.stringify({"auth":{"sessionid":sessID,"iduser":parseInt(iduser),"token":tokk},"port":parseInt(openPort)}),
+      dataType: 'json',
+      statusCode: {
+  200: function (response) {
+    
+ myFunction();  
+  },
+  201: function (response) {
+
+
+
+  },
+  400: function (response) {
+     alert('1');
+     bootbox.alert('<span style="color:Red;">Error While Saving Outage Entry Please Check</span>', function () { });
+  },
+  404: function (response) {
+     alert('1');
+     bootbox.alert('<span style="color:Red;">Error While Saving Outage Entry Please Check</span>', function () { });
+  }
+  },
+
+
+      success: function()
+      {
+
+
+
+
+      }
+
+  } );
+        
+        
+        
+        
+        
+        
+        
+        
+        
+      });
+    
+    
+     $("#btnChangePassword").click(function(){
+        oldPassword =  $("#oldPassword").val();
+        confirmOldPassword = $("#confirmOldPassword").val();
+        newPassword = $("#newPassword").val();
+        confirmNewPassword = $("#confirmNewPassword").val();
+             
+         console.log(oldPassword +" "+ newPassword);
+       if(oldPassword != confirmOldPassword)
+           {
+               alert("Old passwords isn´t same");
+               
+               
+           }
+         
+         else if(newPassword !=confirmNewPassword)
+             {
+                 alert("New passwords isn´t same");
+             }
+         
+         else{
+$.ajax({
+
+      traditional: true,
+      type:"POST",
+      url: 'http://itsovy.sk:1122/auth/chpasswd',
+      contentType: 'application/json',
+      data: JSON.stringify({"auth":{"sessionid":sessID,"iduser":parseInt(iduser),"token":tokk},"oldpass":oldPassword,"newpass":newPassword}),
+      dataType: 'json',
+      statusCode: {
+  200: function (response) {
+    
+ myFunction();  
+  },
+  201: function (response) {
+
+
+
+  },
+  400: function (response) {
+     alert('1');
+     bootbox.alert('<span style="color:Red;">Error While Saving Outage Entry Please Check</span>', function () { });
+  },
+  404: function (response) {
+     alert('1');
+     bootbox.alert('<span style="color:Red;">Error While Saving Outage Entry Please Check</span>', function () { });
+  }
+  },
+
+
+      success: function()
+      {
+
+
+
+
+      }
+
+  } );
+         }
+         
+         
+         
+         
+         
+         
+           });
+    
+    
+      $("#btnClosePort").click(function(){
+          
+          
+          
+          $.ajax({
+
+      traditional: true,
+      type:"POST",
+      url: 'http://itsovy.sk:1122/linux/myports',
+      contentType: 'application/json',
+      data: JSON.stringify({"auth":{"sessionid":sessID,"iduser":parseInt(iduser),"token":tokk}}),
+      dataType: 'json',
+      statusCode: {
+  200: function (response) {
+    for(var i=0;i<response.ports.length;i++){
+  $("#openedPorts").append("<option>"+response.ports[i].port+"</option>")
+    }
+  },
+  201: function (response) {
+
+
+
+  },
+  400: function (response) {
+     alert('1');
+     bootbox.alert('<span style="color:Red;">Error While Saving Outage Entry Please Check</span>', function () { });
+  },
+  404: function (response) {
+     alert('1');
+     bootbox.alert('<span style="color:Red;">Error While Saving Outage Entry Please Check</span>', function () { });
+  }
+  },
+
+
+      success: function()
+      {
+
+
+
+
+      }
+
+  } );
+          
+          
+          
+              });
+      
+        window.onload = function() {
+    if (window.jQuery) {  
+        $("#h1Username").html(localStorage.getItem("usrname"));
+        
+        
+    } else {
+        // jQuery is not loaded
+        alert("Doesn't Work");
+    }
+}
+    
+     
+    
+
+        
 }(document, window, 0));
 
+    function myFunction() {
+  // Get the snackbar DIV
+  var x = document.getElementById("snackbar");
+
+  // Add the "show" class to DIV
+  x.className = "show";
+
+  // After 3 seconds, remove the show class from DIV
+  setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+}
 
   function generateSesssionId() {
     var text = "";
