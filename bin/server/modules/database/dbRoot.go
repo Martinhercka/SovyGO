@@ -111,7 +111,7 @@ func (d *Database) AsignUser(req s.AsignDBUser) error {
 	if owner != req.Auth.UserID {
 		return errors.New("unauthorized")
 	}
-	if req.Privileges == "all" {
+	if req.Privileges == "all" || req.Privileges == "" {
 		statement, err = db.Prepare("GRANT ALL PRIVILEGES ON ?.* TO ?@'%'")
 	} else if req.Privileges == "read" {
 		statement, err = db.Prepare("GRANT READ PRIVILEGES ON ?.* TO ?@'%'")

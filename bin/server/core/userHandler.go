@@ -15,25 +15,25 @@ func (c *Core) UserListAll(w http.ResponseWriter, r *http.Request) {
 	var err error
 	err = json.NewDecoder(r.Body).Decode(&req)
 	if err != nil {
-		w.WriteHeader(300)
-		fmt.Fprintf(w, "{'message':'wrong request'}")
+		w.WriteHeader(400)
+		fmt.Fprintf(w, "{\"message\":\"wrong request\"}")
 		return
 	}
 	if !c.p.AuthenticateSession(req) {
 		w.WriteHeader(http.StatusForbidden)
-		fmt.Fprintf(w, "{'message':'unauthorized'}")
+		fmt.Fprintf(w, "{\"message\":\"unauthorized\"}")
 		return
 	}
 	data, err := c.DB.UserListAll()
 	if err != nil {
 		w.WriteHeader(500)
-		fmt.Fprintf(w, "{'message':'internal error'}")
+		fmt.Fprintf(w, "{\"message\":\"internal error\"}")
 		return
 	}
 	out, err := json.MarshalIndent(data, " ", "  ")
 	if err != nil {
 		w.WriteHeader(500)
-		fmt.Fprintf(w, "{'message':'marshaling error'}")
+		fmt.Fprintf(w, "{\"message\":\"marshaling error\"}")
 	}
 	w.WriteHeader(http.StatusOK)
 	fmt.Fprintf(w, string(out))

@@ -276,7 +276,16 @@ func (d *Database) SetUserActive(tkn string) error {
 
 	var usrid int
 	err = statement.QueryRow(tkn).Scan(&usrid)
-	fmt.Println(usrid)
+	if err != nil {
+		fmt.Println(err)
+		return errors.New("invalid token")
+	}
+	statement, err = db.Prepare("delete from activationtoken where activationtoken = ?")
+	if err != nil {
+		fmt.Println(err)
+		return errors.New("failed to prepare statementasdasd")
+	}
+	_, err = statement.Exec(tkn)
 	statement, err = db.Prepare("update user set active = 'y' where iduser = ?")
 	fmt.Println(tkn)
 	_, err = statement.Exec(usrid)

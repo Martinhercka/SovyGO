@@ -59,6 +59,7 @@ func (s *Server) StartServer() error {
 	s.r.HandleFunc("/linux/newuser", s.core.LinuxCreateUSer).Methods("post")
 	s.r.HandleFunc("/linux/openport", s.core.LinuxOpenPort).Methods("post")
 	s.r.HandleFunc("/linux/available", s.core.LinuxAvailablePort).Methods("post")
+	s.r.HandleFunc("/linux/myports", s.core.LinuxMyPorts).Methods("post")
 	s.r.HandleFunc("/linux/closeport", s.core.LinuxClosePort).Methods("post")
 	s.r.HandleFunc("/linux/chpasswd", s.core.LinuxChPasswd).Methods("post")
 
@@ -70,6 +71,7 @@ func (s *Server) StartServer() error {
 	s.r.HandleFunc("/auth/login", s.core.LoginHandler).Methods("POST")
 	s.r.HandleFunc("/auth/logout", s.core.LogoutHnadler).Methods("POST")
 	s.r.HandleFunc("/auth/chpasswd", s.core.PasswordChange).Methods("POST")
+	s.r.HandleFunc("/auth/activate", s.core.ActivationHandler).Methods("GET")
 	s.r.HandleFunc("/key/new/", func(w http.ResponseWriter, r *http.Request) {
 		core.NewKey(w, r, &s.state)
 	})

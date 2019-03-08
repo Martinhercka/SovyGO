@@ -9,7 +9,6 @@ import (
 
 //Activationmail --
 func Activationmail(email string, tokenn string, mailer str.Mail) {
-
 	m := gomail.NewMessage()
 	m.SetHeader("From", "martinhercka1@gmail.com")
 	m.SetHeader("To", email)
@@ -17,7 +16,7 @@ func Activationmail(email string, tokenn string, mailer str.Mail) {
 	m.SetBody("text/html", mailer.Host+mailer.Port+"/auth/activate?token="+tokenn)
 
 	if mailer.Username == "" || mailer.Password == "" {
-		fmt.Println(mailer.Host + ":" + mailer.Port + "/auth/activate?token=" + tokenn)
+		fmt.Println(mailer.Host + mailer.Port + "/auth/activate?token=" + tokenn)
 		return
 	}
 	d := gomail.NewDialer("smtp.gmail.com", 587, mailer.Username, mailer.Password)
