@@ -87,7 +87,7 @@ else {
 loginUsername = $("#loginUsername").val();
 loginPassword = $("#loginPassword").val();
      
-console.log(sessionID+" "+loginUsername+" "+loginPassword);
+
 
 $.ajax({
 
@@ -110,7 +110,7 @@ $.ajax({
      sessID = sessionID = localStorage.getItem("sessID");
   tokk = localStorage.getItem("tokk");
   iduser = localStorage.getItem("iduser");
-    alert(tokk+" "+sessID+" "+iduser);
+
     window.location.href = "loggedIn.html";
    
     
@@ -276,7 +276,7 @@ $("#loggedIn").html('Logged as: '+localStorage.getItem("usrname"));
       statusCode: {
   200: function (response) {
     
- myFunction();  
+
   },
   201: function (response) {
 
@@ -303,6 +303,47 @@ $("#loggedIn").html('Logged as: '+localStorage.getItem("usrname"));
       }
 
   } );
+        
+     $.ajax({
+
+      traditional: true,
+      type:"POST",
+      url: 'http://itsovy.sk:1122/linux/myports',
+      contentType: 'application/json',
+      data: JSON.stringify({"auth":{"sessionid":sessID,"iduser":parseInt(iduser),"token":tokk}}),
+      dataType: 'json',
+      statusCode: {
+  200: function (response) {
+    for(var i=0;i<response.ports.length;i++){
+  $("#openedPorts").append("<option>"+response.ports[i].port+"</option>")
+    }
+  },
+  201: function (response) {
+
+
+
+  },
+  400: function (response) {
+     alert('1');
+     bootbox.alert('<span style="color:Red;">Error While Saving Outage Entry Please Check</span>', function () { });
+  },
+  404: function (response) {
+     alert('1');
+     bootbox.alert('<span style="color:Red;">Error While Saving Outage Entry Please Check</span>', function () { });
+  }
+  },
+
+
+      success: function()
+      {
+
+
+
+
+      }
+
+  } );       
+    
         
         
         
@@ -383,57 +424,13 @@ $.ajax({
            });
     
     
-      $("#btnClosePort").click(function(){
-          
-          
-          
-          $.ajax({
-
-      traditional: true,
-      type:"POST",
-      url: 'http://itsovy.sk:1122/linux/myports',
-      contentType: 'application/json',
-      data: JSON.stringify({"auth":{"sessionid":sessID,"iduser":parseInt(iduser),"token":tokk}}),
-      dataType: 'json',
-      statusCode: {
-  200: function (response) {
-    for(var i=0;i<response.ports.length;i++){
-  $("#openedPorts").append("<option>"+response.ports[i].port+"</option>")
-    }
-  },
-  201: function (response) {
-
-
-
-  },
-  400: function (response) {
-     alert('1');
-     bootbox.alert('<span style="color:Red;">Error While Saving Outage Entry Please Check</span>', function () { });
-  },
-  404: function (response) {
-     alert('1');
-     bootbox.alert('<span style="color:Red;">Error While Saving Outage Entry Please Check</span>', function () { });
-  }
-  },
-
-
-      success: function()
-      {
-
-
-
-
-      }
-
-  } );
-          
-          
-          
-              });
+   
       
         window.onload = function() {
     if (window.jQuery) {  
         $("#h1Username").html(localStorage.getItem("usrname"));
+        
+                  
         
         
     } else {
